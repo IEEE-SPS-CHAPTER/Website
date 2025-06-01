@@ -19,7 +19,7 @@ export default function Header() {
         position: "fixed",
         top: 0,
         backdropFilter: "blur(50px)",
-        backgroundColor: "rgba(0, 0, 0, 0.14)",
+        backgroundColor: "rgba(0, 0, 0, 0.4)",
       }}
     >
       <div className="h-full aspect-square flex items-center justify-center border-r border-white">

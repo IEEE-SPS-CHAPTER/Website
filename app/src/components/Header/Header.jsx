@@ -31,7 +31,7 @@ export default function Header() {
       }}
     >
       <div className="h-full aspect-square flex items-center justify-center border-r border-white">
-        <Image src="/vit-vellore.svg" alt="Logo" width={40} height={40} />
+        <Image src="/vit-vellore.svg" alt="Logo" width={55} height={55} />
       </div>
       <nav className="flex flex-1 h-full">
         {navLinks.map(({ label, href }) => (

@@ -1,7 +1,8 @@
 export default function Blog() {
   return (
-    <div
-      className="fixed inset-0 bg-white w-screen h-screen overflow-auto"
+    <section
+      id="blog"
+      className=" inset-0 bg-white w-screen h-screen overflow-auto"
       style={{
         backgroundImage: 'url("/blog-bg.svg")',
         backgroundSize: "cover",
@@ -63,6 +64,6 @@ export default function Blog() {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

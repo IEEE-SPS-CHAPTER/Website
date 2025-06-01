@@ -32,6 +32,8 @@ body {
   color: var(--foreground);
   font-family: "Instrument Sans", Arial, Helvetica, sans-serif;
   min-height: 100vh;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 main {
@@ -44,4 +46,13 @@ main {
 
 button {
   cursor: pointer;
+}
+
+* {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+*::-webkit-scrollbar {
+  display: none;
 }

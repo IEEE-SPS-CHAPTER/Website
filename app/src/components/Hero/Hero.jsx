@@ -4,7 +4,10 @@ import HeroGlobe from "./HeroGlobe/HeroGlobe";
 
 export default function Hero() {
   return (
-    <section className="relative w-full h-screen min-h-[600px] flex items-center justify-center px-8 overflow-hidden">
+    <section
+      id="hero"
+      className="relative w-full h-screen min-h-[600px] flex items-center justify-center px-8 overflow-hidden"
+    >
       <div className="absolute inset-0 z-10 pointer-events-none bg-[radial-gradient(ellipse_at_center,transparent_20%,rgba(0,0,0,0.8)_100%)]" />
 
       <div className="flex-1 flex flex-col justify-center items-start h-full z-20">

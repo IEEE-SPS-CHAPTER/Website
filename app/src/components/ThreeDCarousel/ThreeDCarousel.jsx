@@ -15,7 +15,7 @@ const cards = [
 
 const ThreeDCarousel = () => {
   return (
-    <div className={styles.wrapper}>
+    <div id="events" className={styles.wrapper}>
       <div className={styles.inner} style={{ "--quantity": cards.length }}>
         {cards.map((card, i) => (
           <div

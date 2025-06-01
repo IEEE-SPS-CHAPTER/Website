@@ -1,7 +1,8 @@
-export default function AboutPage() {
+export default function About() {
   return (
-    <div
-      className="min-h-screen flex items-center justify-center bg-cover bg-center relative"
+    <section
+      id="about"
+      className="min-h-screen min-w-screen flex items-center justify-center bg-cover bg-center relative"
       style={{ backgroundImage: "url('/about-bg.svg')" }}
     >
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm z-0" />
@@ -34,6 +35,6 @@ export default function AboutPage() {
           </p>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

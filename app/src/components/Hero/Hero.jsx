@@ -1,5 +1,6 @@
 import Image from "next/image";
 import CheckBlog from "./CheckBlog/CheckBlog";
+import HeroGlobe from "./HeroGlobe/HeroGlobe";
 
 export default function Hero() {
   return (
@@ -14,25 +15,7 @@ export default function Hero() {
         <CheckBlog />
       </div>
       <div className="flex items-center justify-center h-full">
-        <div
-          className="flex items-center justify-center rounded-full overflow-hidden"
-          style={{
-            width: 600,
-            height: 600,
-            minWidth: 300,
-            minHeight: 300,
-            zIndex: 10,
-          }}
-        >
-          <video
-            src="/globe.webm"
-            autoPlay
-            loop
-            muted
-            playsInline
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
-          />
-        </div>
+        <HeroGlobe />
       </div>
       <Image
         src="/hero-bg.svg"

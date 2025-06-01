@@ -1,92 +1,109 @@
 "use client";
 
-import { useState } from "react";
-import Image from "next/image";
-import {
-  FaArrowLeft,
-  FaArrowRight,
-  FaHeart,
-  FaShareAlt,
-  FaDownload,
-} from "react-icons/fa";
+import React from "react";
+import styled from "styled-components";
 
-const images = [
-  "/events/alumni-homecoming.svg",
-  "/events/anc-360.svg",
-  "/events/audio-sphere.svg",
-  "/events/casa.svg",
-  "/events/electrohive.svg",
-  "/events/green-horizon.svg",
-  "/events/pixel-power.svg",
+const cards = [
+  { src: "/events/alumni-homecoming.svg", color: "17, 20, 42" },
+  { src: "/events/anc-360.svg", color: "49, 1, 1" },
+  { src: "/events/audio-sphere.svg", color: "81, 17, 86" },
+  { src: "/events/casa.svg", color: "205, 198, 228" },
+  { src: "/events/electrohive.svg", color: "85, 111, 20" },
+  { src: "/events/green-horizon.svg", color: "205, 237, 234" },
+  { src: "/events/pixel-power.svg", color: "73, 219, 194" },
 ];
 
-const SimpleCarousel = () => {
-  const [index, setIndex] = useState(0);
-
-  const prevSlide = () =>
-    setIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-  const nextSlide = () => setIndex((prev) => (prev + 1) % images.length);
-
+const ThreeDCarousel = () => {
   return (
-    <div className="relative w-full max-w-[430px] mx-auto overflow-hidden rounded-2xl shadow-lg">
-      <div
-        className="flex transition-transform duration-700 ease-in-out"
-        style={{ transform: `translateX(-${index * 100}%)` }}
-      >
-        {images.map((src, i) => (
-          <div key={i} className="min-w-full h-[300px] relative">
-            <Image
-              src={src}
-              alt={`Slide ${i}`}
-              fill
-              className="object-cover rounded-2xl"
-              priority={i === 0}
-            />
-
-            <div className="absolute top-2 right-2 flex gap-2 text-white text-sm">
-              <button className="bg-black/50 p-2 rounded-full hover:bg-black/70">
-                <FaHeart />
-              </button>
-              <button className="bg-black/50 p-2 rounded-full hover:bg-black/70">
-                <FaShareAlt />
-              </button>
-              <button className="bg-black/50 p-2 rounded-full hover:bg-black/70">
-                <FaDownload />
-              </button>
+    <StyledWrapper>
+      <div className="wrapper">
+        <div className="inner" style={{ "--quantity": cards.length }}>
+          {cards.map((card, i) => (
+            <div
+              key={i}
+              className="card"
+              style={{
+                "--index": i,
+                "--color-card": card.color,
+              }}
+            >
+              <img src={card.src} alt={`Card ${i + 1}`} />
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-
-      <button
-        onClick={prevSlide}
-        className="absolute top-1/2 left-2 -translate-y-1/2 bg-black/50 text-white rounded-full p-2 hover:bg-black/70"
-        aria-label="Previous"
-      >
-        <FaArrowLeft />
-      </button>
-      <button
-        onClick={nextSlide}
-        className="absolute top-1/2 right-2 -translate-y-1/2 bg-black/50 text-white rounded-full p-2 hover:bg-black/70"
-        aria-label="Next"
-      >
-        <FaArrowRight />
-      </button>
-
-      <div className="absolute bottom-4 w-full flex justify-center gap-2">
-        {images.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => setIndex(i)}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${
-              i === index ? "bg-white" : "bg-white/50"
-            }`}
-            aria-label={`Go to slide ${i + 1}`}
-          />
-        ))}
-      </div>
-    </div>
+    </StyledWrapper>
   );
 };
 
-export default SimpleCarousel;
+const StyledWrapper = styled.div`
+  .wrapper {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+    perspective: 1200px;
+  }
+
+  .inner {
+    --w: 160px;
+    --h: 220px;
+    --translateZ: 350px;
+    --rotateX: -15deg;
+    --perspective: 1200px;
+    position: absolute;
+    width: var(--w);
+    height: var(--h);
+    top: 25%;
+    left: calc(50% - (var(--w) / 2) - 2.5px);
+    z-index: 2;
+    transform-style: preserve-3d;
+    animation: rotating 20s linear infinite;
+  }
+
+  @keyframes rotating {
+    from {
+      transform: perspective(var(--perspective)) rotateX(var(--rotateX))
+        rotateY(0);
+    }
+    to {
+      transform: perspective(var(--perspective)) rotateX(var(--rotateX))
+        rotateY(1turn);
+    }
+  }
+
+  .card {
+    position: absolute;
+    width: var(--w);
+    height: var(--h);
+    border: 2px solid rgba(var(--color-card), 0.8);
+    border-radius: 20px;
+    overflow: hidden;
+    inset: 0;
+    background-color: rgba(var(--color-card), 0.15);
+    box-shadow: 0 8px 16px rgba(var(--color-card), 0.3);
+    cursor: pointer;
+    transition: box-shadow 0.3s ease;
+    transform: rotateY(calc((360deg / var(--quantity)) * var(--index)))
+      translateZ(var(--translateZ));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .card:hover {
+    box-shadow: 0 16px 32px rgba(var(--color-card), 0.6);
+  }
+
+  .card img {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    border-radius: 12px;
+  }
+`;
+
+export default ThreeDCarousel;

@@ -1,4 +1,12 @@
 import Image from "next/image";
+import Link from "next/link";
+
+const navLinks = [
+  { label: "Home", href: "/" },
+  { label: "Blog", href: "/blog" },
+  { label: "About", href: "/about" },
+  { label: "Events", href: "/events" },
+];
 
 export default function Header() {
   return (
@@ -17,14 +25,15 @@ export default function Header() {
         <Image src="/vit-vellore.svg" alt="Logo" width={40} height={40} />
       </div>
       <nav className="flex flex-1 h-full">
-        {["Home", "About", "Services", "Blog", "Contact"].map((label) => (
-          <button
+        {navLinks.map(({ label, href }) => (
+          <Link
             key={label}
+            href={href}
             className="flex-1 h-full border-r border-white last:border-r-0 flex items-center justify-center hover:bg-white/10 transition-colors"
             style={{ fontSize: "28px" }}
           >
             {label}
-          </button>
+          </Link>
         ))}
       </nav>
     </header>

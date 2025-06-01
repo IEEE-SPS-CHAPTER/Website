@@ -1,5 +1,5 @@
 import "./globals.css";
-// import Header from "../components/Header/Header";
+import Header from "../components/Header/Header";
 
 export const metadata = {
   title: "IEEE-SPS VIT",
@@ -10,7 +10,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className="antialiased">
-        {/* <Header /> */}
+        <Header />
         {children}
       </body>
     </html>

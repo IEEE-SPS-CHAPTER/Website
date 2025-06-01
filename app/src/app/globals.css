@@ -26,8 +26,22 @@
   --foreground: #ededed;
 }
 
+html,
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: "Instrument Sans", Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+button {
+  cursor: pointer;
 }

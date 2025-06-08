@@ -5,7 +5,10 @@ import styles from "./CheckBlog.module.css";
 
 const CheckBlog = () => {
   const handleClick = () => {
-    window.open("/blog", "_self");
+    const blogSection = document.getElementById("blog");
+    if (blogSection) {
+      blogSection.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   return (

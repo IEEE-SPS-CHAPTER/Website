@@ -11,7 +11,7 @@ const Contact = () => {
   return (
     <section
       id="contact"
-      className="min-h-screen min-w-screen flex flex-col md:flex-row bg-gradient-to-tr from-black via-[#020402] to-[#015C91] text-white font-sans text-lg md:text-xl"
+      className="flex flex-col md:flex-row bg-gradient-to-tr from-black via-[#020402] to-[#015C91] text-white font-sans text-lg md:text-xl"
     >
       <div className="w-full md:w-1/2 flex flex-col justify-around p-14 md:p-24 space-y-14">
         <nav className="space-y-8 border-b-2 border-white/70 pb-12">

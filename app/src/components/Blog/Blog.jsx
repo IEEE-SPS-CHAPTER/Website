@@ -2,7 +2,7 @@ export default function Blog() {
   return (
     <section
       id="blog"
-      className=" inset-0 bg-white w-screen h-screen overflow-auto"
+      className="inset-0 bg-white w-screen overflow-auto"
       style={{
         backgroundImage: 'url("/blog-bg.svg")',
         backgroundSize: "cover",

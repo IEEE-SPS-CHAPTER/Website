@@ -56,3 +56,8 @@ button {
 *::-webkit-scrollbar {
   display: none;
 }
+
+section {
+  height: 100vh;
+  width: 100vw;
+}

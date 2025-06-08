@@ -2,7 +2,7 @@ export default function About() {
   return (
     <section
       id="about"
-      className="min-h-screen min-w-screen flex items-center justify-center bg-cover bg-center relative"
+      className="flex items-center justify-center bg-cover bg-center relative"
       style={{ backgroundImage: "url('/about-bg.svg')" }}
     >
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm z-0" />

@@ -1,19 +1,19 @@
 .wrapper {
   width: 100%;
-  height: 100vh;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: visible;
   perspective: 1200px;
+  padding-top: 300px;
 }
 
 .inner {
   --w: 160px;
-  --h: 220px;
-  --translateZ: 350px;
-  --rotateX: -15deg;
+  --h: 200px;
+  --translateZ: 250px;
+  --rotateX: -10deg;
   --perspective: 1200px;
   position: absolute;
   width: var(--w);

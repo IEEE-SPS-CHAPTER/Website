@@ -14,7 +14,6 @@ export default function Team() {
       <h2
         style={{
           position: "absolute",
-
           right: 0,
           margin: "32px 48px 0 0",
           fontFamily: "'Inter'",

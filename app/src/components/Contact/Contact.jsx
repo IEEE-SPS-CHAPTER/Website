@@ -4,6 +4,7 @@ import {
   FaLinkedin,
   FaFacebookF,
   FaInstagram,
+  FaGithub,
 } from "react-icons/fa";
 import Link from "next/link";
 
@@ -16,25 +17,25 @@ const Contact = () => {
       <div className="w-full md:w-1/2 flex flex-col justify-around p-14 md:p-24 space-y-14">
         <nav className="space-y-8 border-b-2 border-white/70 pb-12">
           <Link
-            href="/about"
+            href="#about"
             className="block text-3xl hover:text-gray-300 transition"
           >
             About
           </Link>
           <Link
-            href="/blog"
+            href="#blog"
             className="block text-3xl hover:text-gray-300 transition"
           >
             Blog
           </Link>
           <Link
-            href="/events"
+            href="#events"
             className="block text-3xl hover:text-gray-300 transition"
           >
             Events
           </Link>
           <Link
-            href="/team"
+            href="#team"
             className="block text-3xl hover:text-gray-300 transition"
           >
             Team
@@ -57,6 +58,13 @@ const Contact = () => {
               target="_blank"
             >
               <FaLinkedin />
+            </a>
+            <a
+              href="https://github.com/IEEE-SPS-CHAPTER"
+              className="hover:text-[#3e3e3e] transition"
+              target="_blank"
+            >
+              <FaGithub />
             </a>
             <a
               href="https://www.facebook.com/vitieeesps/"

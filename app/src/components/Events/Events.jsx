@@ -48,13 +48,13 @@ const EventsCarousel = () => {
   return (
     <section className="py-16 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
       <div className="container mx-auto px-4">
-        <h2 className="text-6xl font-bold text-center text-gray-100 mb-16 font-['Inter']">
+        <h1 className="text-6xl font-bold text-center text-gray-100 mb-16 font-['Inter']">
           Events
-        </h2>
+        </h1>
 
-        <div className="relative max-w-4xl mx-auto">
+        <div className="relative min-w-2xl mx-auto">
           {/* Main carousel container */}
-          <div className="relative md:size-150 overflow-hidden rounded-2xl bg-gray-800/50 backdrop-blur-sm">
+          <div className="relative md:mx-auto md:size-150 overflow-hidden rounded-2xl bg-gray-800/50 backdrop-blur-sm">
 
             {/* Carousel slides */}
             <div

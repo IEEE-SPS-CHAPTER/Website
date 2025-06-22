@@ -19,7 +19,7 @@ function DumpSceneGraph() {
     function showObjects(obj, lines = [], isLast = true, prefix = '') {
       const localPrefix = isLast ? '|_' : '|-';
       lines.push(`${prefix ? localPrefix : ''}${obj.name || '*no-name*'} [${obj.type}]`);
-      const newPrefix = prefix + (isLast ? '  ' : ' | ' );
+      const newPrefix = prefix + (isLast ? '  ' : ' | ');
       const lastNdx = obj.children.length - 1;
       obj.children.forEach((child, ndx) => {
         const isLast = ndx === lastNdx;
@@ -40,13 +40,13 @@ function Rotator() {
   const { scene } = useGLTF("/sps-globe.glb");
   useFrame(() => {
     groupRef.current.traverse((obj) => {
-      if ( obj.isMesh && obj.name !== "border" ) {
+      if (obj.isMesh && obj.name !== "border") {
         obj.rotation.y -= 0.001;
       }
     });
   });
   return <group ref={groupRef}>
-    <primitive object={scene}/>
+    <primitive object={scene} />
   </group>
 }
 
@@ -75,10 +75,6 @@ export default function HeroGlobe() {
         <GlobeModel scale={1.0} />
         <DumpSceneGraph />
         <Rotator />
-        <OrbitControls
-          enablePan={false}
-          enableZoom={false}
-        />
         <Environment preset="sunset" />
       </Canvas>
     </div>

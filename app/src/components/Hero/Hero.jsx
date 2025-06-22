@@ -8,22 +8,25 @@ export default function Hero() {
       id="hero"
       className="relative flex items-center justify-center px-8 overflow-hidden min-h-screen"
     >
-      <div className="absolute inset-0 z-10 pointer-events-none bg-[radial-gradient(ellipse_at_center,transparent_20%,rgba(0,0,0,0.8)_100%)]" />
+      {/* Main content container */}
+      <div style={{ zIndex: 1 }} className="w-full max-w-7xl mx-auto">
+        {/* Desktop: flex-row (side by side), Mobile: flex-col (stacked) */}
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12">
 
-      {/* Globe positioning: Top-center on mobile, Right side on desktop */}
-      <div className="absolute top-20 left-1/2 transform -translate-x-1/2 md:top-1/2 md:right-8 md:left-auto md:transform md:-translate-y-1/2 md:translate-x-0 z-20">
-        <HeroGlobe />
-      </div>
+          {/* Left side - Text content */}
+          <div className="flex-1 order-2 lg:order-1 text-center lg:text-left sm:ml-2">
+            <div className="font-black text-left text-6xl sm:text-6xl lg:text-6xl py-4">
+              <h1> WE ARE <span className="italic">IEEE SPS</span> </h1>
+            </div>
+            <CheckBlog />
+          </div>
 
-      {/* Text content: Bottom-center on mobile, Left side on desktop */}
-      <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 md:bottom-auto md:top-1/2 md:left-8 md:transform md:-translate-y-1/2 md:translate-x-0 z-20 text-center md:text-left max-w-lg">
-        <h1
-          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-8 text-white drop-shadow-lg"
-          style={{ fontFamily: "Orbitron" }}
-        >
-          WE ARE IEEE SPS
-        </h1>
-        <CheckBlog />
+          {/* Right side - 3D Globe */}
+          <div className="flex-1 order-1 lg:order-2 flex justify-center lg:justify-end">
+            <HeroGlobe />
+          </div>
+
+        </div>
       </div>
 
       <Image

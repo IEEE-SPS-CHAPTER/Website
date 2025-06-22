@@ -54,8 +54,8 @@ export default function HeroGlobe() {
   return (
     <div
       style={{
-        width: "min(60vw, 750px)",
-        height: "min(60vw, 750px)",
+        width: "min(100vw, 500px)",
+        height: "min(100vw, 500px)",
         aspectRatio: 1,
         overflow: "hidden",
         zIndex: 10,
@@ -63,6 +63,8 @@ export default function HeroGlobe() {
         alignItems: "center",
         justifyContent: "center",
         background: "transparent",
+        margin: 0,
+        padding: 0,
       }}
     >
       <Canvas
@@ -72,7 +74,7 @@ export default function HeroGlobe() {
       >
         <ambientLight intensity={0.7} />
         <directionalLight position={[5, 5, 5]} intensity={1} />
-        <GlobeModel scale={1.0} />
+        <GlobeModel scale={0.8} />
         <DumpSceneGraph />
         <Rotator />
         <Environment preset="sunset" />

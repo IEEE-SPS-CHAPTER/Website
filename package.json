@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/IEEE-SPS-CHAPTER/Website/issues"
   },
-  "homepage": "https://github.com/IEEE-SPS-CHAPTER/Website#readme"
+  "homepage": "https://github.com/IEEE-SPS-CHAPTER/Website#readme",
+  "dependencies": {
+    "next": "^15.3.4"
+  }
 }

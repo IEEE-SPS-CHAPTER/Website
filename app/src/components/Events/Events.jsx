@@ -63,7 +63,7 @@ const EventsCarousel = () => {
                 >
                   <div className="text-center">
                     <div
-                      className="mx-auto mb-4 rounded-lg overflow-hidden shadow-lg"
+                      className="mx-auto overflow-hidden shadow-lg"
                       style={{
                         backgroundColor: `rgba(${card.color}, 0.2)`,
                         border: `2px solid rgba(${card.color}, 0.5)`,
@@ -73,23 +73,13 @@ const EventsCarousel = () => {
                       <img
                         src={card.src}
                         alt={card.title}
-                        className="w-full h-full object-cover"
+                        className="w-1/2 md:w-full md:h-full object-cover"
                         onError={(e) => {
                           e.target.style.display = "none";
                           e.target.nextSibling.style.display = "flex";
                         }}
                       />
-                      <div
-                        className="w-full h-full hidden items-center justify-center text-gray-400"
-                        style={{ backgroundColor: `rgba(${card.color}, 0.1)` }}
-                      >
-                        <span className="text-sm">Image not found</span>
-                      </div>
                     </div>
-                    <h3
-                      className="text-2xl font-semibold mb-2"
-                      style={{ color: `rgba(${card.color}, 1)` }}
-                    ></h3>
                   </div>
                 </div>
               ))}
@@ -117,11 +107,10 @@ const EventsCarousel = () => {
               <button
                 key={index}
                 onClick={() => goToSlide(index)}
-                className={`w-3 h-3 rounded-full transition-all duration-200 ${
-                  index === currentIndex
-                    ? "bg-blue-500 scale-125"
-                    : "bg-gray-500 hover:bg-gray-400"
-                }`}
+                className={`w-3 h-3 rounded-full transition-all duration-200 ${index === currentIndex
+                  ? "bg-blue-500 scale-125"
+                  : "bg-gray-500 hover:bg-gray-400"
+                  }`}
               />
             ))}
           </div>

@@ -89,6 +89,7 @@ const Contact = () => {
           src="/banner.svg"
           alt="Contact Visual"
           className="w-[95%] max-w-2xl md:max-w-3xl"
+          draggable="false"
         />
       </div>
     </section>

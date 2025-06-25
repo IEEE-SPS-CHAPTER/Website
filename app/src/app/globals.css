@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+@layer base {
+  * {
+    @apply select-none;
+  }
+}
+
 @font-face {
   font-family: "Instrument Sans";
   src: url("/fonts/InstrumentSans-VariableFont_wdth,wght.ttf")

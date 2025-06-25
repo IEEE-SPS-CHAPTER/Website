@@ -38,7 +38,10 @@ const EventsCarousel = () => {
   };
 
   return (
-    <section className="py-16 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+    <section
+      id="events"
+      className="py-16 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900"
+    >
       <div className="container mx-auto px-4">
         <h1 className="text-6xl font-bold text-center text-gray-100 mb-16 font-['Inter']">
           Events
@@ -78,6 +81,7 @@ const EventsCarousel = () => {
                           e.target.style.display = "none";
                           e.target.nextSibling.style.display = "flex";
                         }}
+                        draggable="false"
                       />
                     </div>
                   </div>

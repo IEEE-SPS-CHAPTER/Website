@@ -9,6 +9,22 @@
   padding-top: 300px;
 }
 
+.inner {
+  --w: 160px;
+  --h: 200px;
+  --translateZ: 250px;
+  --rotateX: -10deg;
+  --perspective: 1200px;
+  position: absolute;
+  width: var(--w);
+  height: var(--h);
+  top: 25%;
+  left: calc(50% - (var(--w) / 2) - 2.5px);
+  z-index: 2;
+  transform-style: preserve-3d;
+  animation: rotating 20s linear infinite;
+}
+
 @keyframes rotating {
   from {
     transform: perspective(var(--perspective)) rotateX(var(--rotateX))
@@ -22,15 +38,23 @@
 
 .card {
   position: absolute;
+  width: var(--w);
+  height: var(--h);
   border: 2px solid rgba(var(--color-card), 0.8);
   border-radius: 20px;
   overflow: hidden;
   inset: 0;
   background-color: rgba(var(--color-card), 0.15);
   box-shadow: 0 8px 16px rgba(var(--color-card), 0.3);
+  cursor: pointer;
+  transition: box-shadow 0.3s ease;
+  transform: rotateY(calc((360deg / var(--quantity)) * var(--index)))
+    translateZ(var(--translateZ));
   display: flex;
   align-items: center;
   justify-content: center;
+  -webkit-backdrop-filter: blur(1px);
+  backdrop-filter: blur(1px);
 }
 
 .card:hover {

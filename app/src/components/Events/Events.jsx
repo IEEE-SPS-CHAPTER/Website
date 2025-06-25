@@ -1,16 +1,8 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Play, Pause } from 'lucide-react';
-
-const cards = [
-  { src: "/events/algosphere.jpeg", color: "17, 20, 42", title: "Algosphere" },
-  { src: "/events/arduino-wars-2.0.jpeg", color: "49, 1, 1", title: "Arduino Wars 2.0" },
-  { src: "/events/c-in-c.jpeg", color: "81, 17, 86", title: "C-in-C" },
-  { src: "/events/currenTest.jpeg", color: "205, 198, 228", title: "Current Test" },
-  { src: "/events/hardwarehustle.jpeg", color: "51, 179, 96", title: "Hardware Hustle" },
-  { src: "/events/silicon-stories.jpeg", color: "205, 237, 234", title: "Silicon Stories" },
-];
+import React, { useState, useEffect } from "react";
+import { ChevronLeft, ChevronRight, Play, Pause } from "lucide-react";
+import cards from "../../data/Events";
 
 const EventsCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -55,7 +47,6 @@ const EventsCarousel = () => {
         <div className="relative min-w-2xl mx-auto">
           {/* Main carousel container */}
           <div className="relative md:mx-auto md:size-150 overflow-hidden rounded-2xl bg-gray-800/50 backdrop-blur-sm">
-
             {/* Carousel slides */}
             <div
               className="flex transition-transform duration-500 ease-in-out h-full"
@@ -67,7 +58,7 @@ const EventsCarousel = () => {
                   className="min-w-full h-full relative flex items-center justify-center mx-auto"
                   style={{
                     backgroundColor: `rgba(${card.color}, 0.1)`,
-                    border: `2px solid rgba(${card.color}, 0.3)`
+                    border: `2px solid rgba(${card.color}, 0.3)`,
                   }}
                 >
                   <div className="text-center">
@@ -76,7 +67,7 @@ const EventsCarousel = () => {
                       style={{
                         backgroundColor: `rgba(${card.color}, 0.2)`,
                         border: `2px solid rgba(${card.color}, 0.5)`,
-                        boxShadow: `0 8px 32px rgba(${card.color}, 0.3)`
+                        boxShadow: `0 8px 32px rgba(${card.color}, 0.3)`,
                       }}
                     >
                       <img
@@ -84,8 +75,8 @@ const EventsCarousel = () => {
                         alt={card.title}
                         className="w-full h-full object-cover"
                         onError={(e) => {
-                          e.target.style.display = 'none';
-                          e.target.nextSibling.style.display = 'flex';
+                          e.target.style.display = "none";
+                          e.target.nextSibling.style.display = "flex";
                         }}
                       />
                       <div
@@ -98,8 +89,7 @@ const EventsCarousel = () => {
                     <h3
                       className="text-2xl font-semibold mb-2"
                       style={{ color: `rgba(${card.color}, 1)` }}
-                    >
-                    </h3>
+                    ></h3>
                   </div>
                 </div>
               ))}
@@ -119,7 +109,6 @@ const EventsCarousel = () => {
             >
               <ChevronRight size={24} />
             </button>
-
           </div>
 
           {/* Dots indicator */}
@@ -128,14 +117,14 @@ const EventsCarousel = () => {
               <button
                 key={index}
                 onClick={() => goToSlide(index)}
-                className={`w-3 h-3 rounded-full transition-all duration-200 ${index === currentIndex
-                  ? 'bg-blue-500 scale-125'
-                  : 'bg-gray-500 hover:bg-gray-400'
-                  }`}
+                className={`w-3 h-3 rounded-full transition-all duration-200 ${
+                  index === currentIndex
+                    ? "bg-blue-500 scale-125"
+                    : "bg-gray-500 hover:bg-gray-400"
+                }`}
               />
             ))}
           </div>
-
         </div>
       </div>
     </section>

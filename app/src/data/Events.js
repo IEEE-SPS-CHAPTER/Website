@@ -1,11 +1,11 @@
 const events = [
-  { src: "/events/algosphere.jpeg", color: "17, 20, 42", title: "Algosphere" },
+  { src: "/events/algosphere.jpeg", color: "7, 84, 124", title: "Algosphere" },
   {
     src: "/events/arduino-wars-2.0.jpeg",
-    color: "49, 1, 1",
+    color: "254, 183, 38",
     title: "Arduino Wars 2.0",
   },
-  { src: "/events/c-in-c.jpeg", color: "81, 17, 86", title: "C-in-C" },
+  { src: "/events/c-in-c.jpeg", color: "107, 243, 248", title: "C-in-C" },
   {
     src: "/events/currenTest.jpeg",
     color: "205, 198, 228",
@@ -13,12 +13,12 @@ const events = [
   },
   {
     src: "/events/hardwarehustle.jpeg",
-    color: "51, 179, 96",
+    color: "55, 224, 39",
     title: "Hardware Hustle",
   },
   {
     src: "/events/silicon-stories.jpeg",
-    color: "205, 237, 234",
+    color: "129, 175, 101",
     title: "Silicon Stories",
   },
 ];

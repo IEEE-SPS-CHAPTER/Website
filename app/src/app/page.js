@@ -1,15 +1,15 @@
 import Hero from "../components/Hero/Hero";
-import About from "../components/About/About";
+import AboutSection from "../components/AboutClient";
 import BlogSection from "../components/BlogClient";
 import EventsSection from "../components/EventsClient";
 import TeamSection from "../components/TeamClient";
-import ContactSection from "../components/Contact/Contact";
+import ContactSection from "../components/ContactClient";
 
 export default function Home() {
   return (
     <main>
       <Hero />
-      <About />
+      <AboutSection />
       <BlogSection />
       <EventsSection />
       <TeamSection />

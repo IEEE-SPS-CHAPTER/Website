@@ -15,8 +15,8 @@ export default function Hero() {
 
           {/* Left side - Text content */}
           <div className="flex-1 order-2 lg:order-1 text-center lg:text-left sm:ml-2">
-            <div className="font-black text-left text-6xl sm:text-6xl lg:text-6xl py-4">
-              <h1> WE ARE <span className="italic">IEEE SPS</span> </h1>
+            <div className="font-black text-left text-7xl sm:text-7xl md:text-8xl py-4">
+              <h1> WE ARE <span className="italic block">IEEE SPS</span> </h1>
             </div>
             <CheckBlog />
           </div>

@@ -1,8 +1,11 @@
 "use client";
 
 import Image from "next/image";
+import { useState } from "react";
 
 export default function About() {
+  const [imgLoaded, setImgLoaded] = useState(false);
+
   return (
     <section
       id="about"
@@ -13,14 +16,24 @@ export default function About() {
 
       <div className="relative z-10 w-full max-w-screen-xl mx-auto px-6 py-20 grid grid-cols-1 md:grid-cols-3 gap-12 text-white">
         <div className="flex items-center justify-center md:justify-end">
-          <Image
-            src="/team.svg"
-            alt="IEEE SPS Team"
-            width={800}
-            height={600}
-            className="object-contain max-h-[400px]"
-            draggable={false}
-          />
+          <div
+            className={`transition-all duration-700 transform ${
+              imgLoaded
+                ? "translate-x-0 opacity-100"
+                : "-translate-x-20 opacity-0"
+            }`}
+          >
+            <Image
+              src="/team.svg"
+              alt="IEEE SPS Team"
+              width={800}
+              height={600}
+              className="object-contain max-h-[400px]"
+              draggable={false}
+              onLoadingComplete={() => setImgLoaded(true)}
+              priority
+            />
+          </div>
         </div>
 
         <div className="md:col-span-2 text-lg leading-relaxed space-y-5">

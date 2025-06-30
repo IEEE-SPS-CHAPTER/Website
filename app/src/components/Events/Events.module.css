@@ -12,9 +12,9 @@
 .inner {
   --w: 160px;
   --h: 200px;
-  --translateZ: 300px;
+  --translateZ: 250px;
   --rotateX: -10deg;
-  --perspective: 1000px;
+  --perspective: 700px;
   position: absolute;
   width: var(--w);
   height: var(--h);

@@ -14,7 +14,7 @@
   --h: 200px;
   --translateZ: 250px;
   --rotateX: -10deg;
-  --perspective: 1200px;
+  --perspective: 700px;
   position: absolute;
   width: var(--w);
   height: var(--h);

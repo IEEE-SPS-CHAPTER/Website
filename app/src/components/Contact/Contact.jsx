@@ -86,7 +86,7 @@ const Contact = () => {
 
       <div className="w-full md:w-1/2 flex items-center justify-center p-14">
         <img
-          src="/banner.svg"
+          src="/icon.svg"
           alt="Contact Visual"
           className="w-[95%] max-w-2xl md:max-w-3xl"
           draggable="false"

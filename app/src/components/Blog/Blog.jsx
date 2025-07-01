@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 // Removed ChevronLeft, ChevronRight from lucide-react as we're using custom SVGs
 import { Plus } from 'lucide-react'; // Plus icon is still used for the card
@@ -31,7 +30,7 @@ const BlogGridCarousel = () => {
     },
     {
       id: 3,
-      title: "CHIP MANUFACTURING : A DIVE INTO ONE OF HUMANITY’S GREATEST SCIENTIFIC FEATS",
+      title: "CHIP MANUFACTURING : A DIVE INTO ONE OF HUMANITY’S GREATEST SCIENTIFIC FEATS IEEE Signal Processing Society-VIT",
       readTime: "3 min read",
       author: "Anusha Ghose",
       date: "April 1, 2025",
@@ -104,12 +103,39 @@ const BlogGridCarousel = () => {
   }
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center py-10 px-4 sm:px-6 lg:px-8 relative font-inter overflow-hidden bg-gray-950"
+    <div className="min-h-screen flex items-center justify-center py-10 px-4 sm:px-6 lg:px-8 relative font-inter overflow-hidden bg-gray-950"
       style={{
         backgroundImage: 'radial-gradient(circle at 1px 1px, #ffffff33 1px, transparent 0)',
-        backgroundRepeat: 'repeat',
         backgroundSize: '20px 20px'
       }}>
+      {/* Background stars - Placeholder images */}
+      <div className="absolute inset-0 pointer-events-none">
+        <img
+          src="https://placehold.co/30x30/000000/FFFFFF?text=*"
+          alt="Star"
+          className="absolute top-10 right-20 w-8 h-8 opacity-70"
+          onError={(e) => { e.target.onerror = null; e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'%3E%3C/polygon%3E%3C/svg%3E"; }}
+        />
+        <img
+          src="https://placehold.co/20x20/000000/FFFFFF?text=*"
+          alt="Star"
+          className="absolute bottom-20 left-40 w-6 h-6 opacity-70"
+          onError={(e) => { e.target.onerror = null; e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'%3E%3C/polygon%3E%3C/svg%3E"; }}
+        />
+        <img
+          src="https://placehold.co/25x25/000000/FFFFFF?text=*"
+          alt="Star"
+          className="absolute top-1/4 left-1/4 w-7 h-7 opacity-70"
+          onError={(e) => { e.target.onerror = null; e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'%3E%3C/polygon%3E%3C/svg%3E"; }}
+        />
+        <img
+          src="https://placehold.co/35x35/000000/FFFFFF?text=*"
+          alt="Star"
+          className="absolute bottom-10 right-1/4 w-9 h-9 opacity-70"
+          onError={(e) => { e.target.onerror = null; e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'%3E%3C/polygon%3E%3C/svg%3E"; }}
+        />
+      </div>
+
       <section className="w-full max-w-6xl relative z-10">
         <h2 className="text-4xl sm:text-5xl font-bold text-white mb-8 sm:mb-12 text-left px-4">
           Our latest blog
@@ -133,7 +159,7 @@ const BlogGridCarousel = () => {
                              bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl p-8 max-h-[500px] relative overflow-hidden
                              transition-all duration-500 transform
                              ${index === currentSlide
-                      ? 'opacity-100 z-10 shadow-lg scale-x-115 scale-y-110' // Active slide: full opacity, higher z-index, shadow
+                      ? 'opacity-100 z-10 shadow-lg' // Active slide: full opacity, higher z-index, shadow
                       : 'opacity-60 z-0' // Inactive slides: reduced opacity, lower z-index
                     }`}
                 >

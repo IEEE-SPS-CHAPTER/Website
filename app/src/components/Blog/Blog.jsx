@@ -1,8 +1,14 @@
-import React, { useState } from 'react';
-import { ChevronLeft, ChevronRight, Plus } from 'lucide-react';
 
-const BlogCarousel = () => {
+import React, { useState, useRef, useEffect } from 'react';
+// Removed ChevronLeft, ChevronRight from lucide-react as we're using custom SVGs
+import { Plus } from 'lucide-react'; // Plus icon is still used for the card
+
+const BlogGridCarousel = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const carouselTrackRef = useRef(null); // Ref for the flex container that holds the cards
+  const carouselContainerRef = useRef(null); // Ref for the overflow-hidden container
+  const [cardWidth, setCardWidth] = useState(0);
+  const [containerWidth, setContainerWidth] = useState(0);
 
   const blogPosts = [
     {
@@ -25,7 +31,7 @@ const BlogCarousel = () => {
     },
     {
       id: 3,
-      title: "CHIP MANUFACTURING : A DIVE INTO ONE OF HUMANITY’S GREATEST SCIENTIFIC FEATS IEEE Signal Processing Society-VIT",
+      title: "CHIP MANUFACTURING : A DIVE INTO ONE OF HUMANITY’S GREATEST SCIENTIFIC FEATS",
       readTime: "3 min read",
       author: "Anusha Ghose",
       date: "April 1, 2025",
@@ -52,6 +58,29 @@ const BlogCarousel = () => {
     }
   ];
 
+  // Tailwind's default gap-4 is 1rem = 16px
+  const GAP_PX = 16;
+
+  // Effect to measure card and container widths
+  useEffect(() => {
+    const measureWidths = () => {
+      if (carouselTrackRef.current && carouselContainerRef.current) {
+        const firstCard = carouselTrackRef.current.children[0];
+        if (firstCard) {
+          setCardWidth(firstCard.offsetWidth);
+        }
+        setContainerWidth(carouselContainerRef.current.offsetWidth);
+      }
+    };
+
+    // Measure initially
+    measureWidths();
+
+    // Add resize listener
+    window.addEventListener('resize', measureWidths);
+    return () => window.removeEventListener('resize', measureWidths);
+  }, [blogPosts.length]); // Re-measure if blogPosts change
+
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % blogPosts.length);
   };
@@ -60,122 +89,124 @@ const BlogCarousel = () => {
     setCurrentSlide((prev) => (prev - 1 + blogPosts.length) % blogPosts.length);
   };
 
-  const goToSlide = (index) => {
-    setCurrentSlide(index);
-  };
+  // Calculate translateX to center the currentSlide
+  let translateX = 0;
+  if (cardWidth > 0 && containerWidth > 0) {
+    // Calculate the total width of cards up to the current slide (including gaps)
+    const totalWidthBeforeCurrent = currentSlide * (cardWidth + GAP_PX);
+
+    // Calculate the offset needed to center the current card
+    const centeringOffset = (containerWidth / 2) - (cardWidth / 2);
+
+    // The final translation is the negative of the total width before current,
+    // plus the centering offset.
+    translateX = -(totalWidthBeforeCurrent - centeringOffset);
+  }
 
   return (
-    <div className="">
-      <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <div className="text-center mt-12 mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">
-            Our latest blog
-          </h1>
-        </div>
+    <div className="min-h-screen w-full flex items-center justify-center py-10 px-4 sm:px-6 lg:px-8 relative font-inter overflow-hidden bg-gray-950"
+      style={{
+        backgroundImage: 'radial-gradient(circle at 1px 1px, #ffffff33 1px, transparent 0)',
+        backgroundRepeat: 'repeat',
+        backgroundSize: '20px 20px'
+      }}>
+      <section className="w-full max-w-6xl relative z-10">
+        <h2 className="text-4xl sm:text-5xl font-bold text-white mb-8 sm:mb-12 text-left px-4">
+          Our latest blog
+        </h2>
 
-        {/* Carousel Container */}
-        <div className="relative">
-          {/* Decorative Stars */}
-          <div className="absolute -top-8 -left-8 text-blue-300/30 text-2xl">✦</div>
-          <div className="absolute -top-4 -right-12 text-purple-300/30 text-xl">✦</div>
-          <div className="absolute -bottom-8 left-16 text-blue-300/30 text-lg">✦</div>
-          <div className="absolute -bottom-4 -right-8 text-purple-300/30 text-2xl">✦</div>
-
-          {/* Main Carousel */}
-          <div className="relative backdrop-blur-lg rounded-3xl p-8">
-            {/* Navigation Buttons */}
-            <button
-              onClick={prevSlide}
-              className="absolute left-2 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-3 transition-all duration-300 border border-white/20"
+        <div className="relative w-full">
+          {/* Main Carousel Container - overflow hidden to clip non-visible cards */}
+          <div ref={carouselContainerRef} className="overflow-hidden rounded-3xl py-4">
+            {/* Carousel Track - flex container that slides */}
+            <div
+              ref={carouselTrackRef}
+              className="flex transition-transform duration-500 ease-in-out gap-4" // Using gap-4 for consistent spacing
+              style={{ transform: `translateX(${translateX}px)` }}
             >
-              <ChevronLeft className="w-6 h-6 text-white" />
-            </button>
-
-            <button
-              onClick={nextSlide}
-              className="absolute right-2 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-3 transition-all duration-300 border border-white/20"
-            >
-              <ChevronRight className="w-6 h-6 text-white" />
-            </button>
-
-            {/* Blog Cards Container */}
-            <div className="relative overflow-visible rounded-2xl min-h-[400px] px-16">
-              <div
-                className="flex transition-transform duration-500 ease-in-out gap-6"
-                style={{ transform: `translateX(calc(-${currentSlide * 100}% - ${currentSlide * 1.5}rem))` }}
-              >
-                {blogPosts.map((post, index) => (
-                  <div
-                    key={post.id}
-                    className={`w-full flex-shrink-0 bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl p-8 min-h-[400px] relative overflow-hidden transition-all duration-500 ${index === currentSlide
-                      ? 'scale-110 opacity-100 z-10'
-                      : 'scale-85 opacity-60 z-0'
-                      }`}
-                  >
-                    {/* Content */}
-                    <div className="relative z-10">
-                      <div className="flex justify-between items-start mb-6">
-                        <div className=" text-blue-600 px-3 py-1 rounded-full text-sm font-medium">
-                          {post.category}
-                        </div>
-                        <button className="text-gray-400 hover:text-gray-600 transition-colors">
-                          <Plus className="w-5 h-5" />
-                        </button>
+              {blogPosts.map((post, index) => (
+                <div
+                  key={post.id}
+                  // Responsive widths: full on sm, 1/2 on md, then wider on lg and xl
+                  // flex-shrink-0 to prevent cards from shrinking
+                  className={`flex-none w-full sm:w-[calc(80%-0.5rem)] md:w-[calc(70%-0.5rem)] lg:w-[calc(60%-0.5rem)] xl:w-[calc(50%-0.5rem)] /* Adjusted for single dominant slide */
+                             bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl p-8 max-h-[500px] relative overflow-hidden
+                             transition-all duration-500 transform
+                             ${index === currentSlide
+                      ? 'opacity-100 z-10 shadow-lg scale-x-115 scale-y-110' // Active slide: full opacity, higher z-index, shadow
+                      : 'opacity-60 z-0' // Inactive slides: reduced opacity, lower z-index
+                    }`}
+                >
+                  {/* Content */}
+                  <div className="relative z-10 flex flex-col h-full">
+                    <div className="flex justify-between items-start mb-6">
+                      <div className="text-blue-600 px-3 py-1 rounded-full text-sm font-medium bg-blue-100">
+                        {post.category}
                       </div>
-
-                      <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 leading-tight">
-                        {post.title}
-                      </h2>
-
-                      <div className="flex items-center gap-4 text-sm text-gray-600 mb-6">
-                        <span>{post.readTime}</span>
-                        <span>•</span>
-                        <span>{post.author}</span>
-                        <span>•</span>
-                        <span>{post.date}</span>
-                      </div>
-
-                      <p className="text-gray-700 text-lg leading-relaxed">
-                        {post.excerpt}
-                      </p>
-                      {/* Read More Button - Only show on focused slide */}
-                      {index === currentSlide && (
-                        <button className="mt-6 inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full font-medium transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/25 transform hover:scale-105">
-                          Read More
-                          <ChevronRight className="w-4 h-4" />
-                        </button>
-                      )}
+                      <button className="text-gray-400 hover:text-gray-600 transition-colors">
+                        <Plus className="w-5 h-5" />
+                      </button>
                     </div>
 
-                    {/* Decorative Elements */}
-                    <div className="absolute top-8 right-8 text-gray-300/20 text-6xl">✦</div>
-                    <div className="absolute bottom-8 left-8 text-gray-300/20 text-4xl">✦</div>
-                  </div>
-                ))}
-              </div>
-            </div>
+                    <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4 leading-tight">
+                      {post.title}
+                    </h3>
 
-            {/* Pagination Dots */}
-            <div className="flex justify-center mt-10 pt-10 gap-3">
-              {blogPosts.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => goToSlide(index)}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentSlide
-                    ? 'bg-blue-400 shadow-lg shadow-blue-400/50'
-                    : 'bg-white/30 hover:bg-white/50'
-                    }`}
-                />
+                    <div className="flex items-center gap-4 text-sm text-gray-600 mb-6">
+                      <span>{post.readTime}</span>
+                      <span>•</span>
+                      <span>{post.author}</span>
+                      <span>•</span>
+                      <span>{post.date}</span>
+                    </div>
+
+                    <p className="text-gray-700 text-base leading-relaxed flex-grow line-clamp-5">
+                      {post.excerpt}
+                    </p>
+
+                    {/* Read More Button */}
+                    <button className="mt-6 inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full font-medium transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/25 transform hover:scale-105 self-start">
+                      Read More
+                      {/* Removed ChevronRight here as it was causing the error */}
+                    </button>
+                  </div>
+
+                  {/* Decorative Elements */}
+                  <div className="absolute top-8 right-8 text-gray-300/20 text-6xl select-none">✦</div>
+                  <div className="absolute bottom-8 left-8 text-gray-300/20 text-4xl select-none">✦</div>
+                </div>
               ))}
             </div>
           </div>
 
+          {/* Navigation Buttons */}
+          <button
+            onClick={prevSlide}
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-3 transition-all duration-300 border border-white/20"
+            aria-label="Previous blog post"
+          >
+            {/* Custom SVG for left arrow */}
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="transform rotate-180">
+              <path d="M5 12C5 12 8 15 12 15C16 15 19 12 19 12M19 12L15 8M19 12L15 16" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+
+          <button
+            onClick={nextSlide}
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-3 transition-all duration-300 border border-white/20"
+            aria-label="Next blog post"
+          >
+            {/* Custom SVG for right arrow (from image) */}
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5 12C5 12 8 15 12 15C16 15 19 12 19 12M19 12L15 8M19 12L15 16" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
         </div>
 
-      </div>
+        {/* Removed Pagination Dots */}
+      </section>
     </div>
   );
 };
 
-export default BlogCarousel;
+export default BlogGridCarousel;

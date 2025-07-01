@@ -156,10 +156,10 @@ const BlogGridCarousel = () => {
                   // Responsive widths: full on sm, 1/2 on md, then wider on lg and xl
                   // flex-shrink-0 to prevent cards from shrinking
                   className={`flex-none w-full sm:w-[calc(80%-0.5rem)] md:w-[calc(70%-0.5rem)] lg:w-[calc(60%-0.5rem)] xl:w-[calc(50%-0.5rem)] /* Adjusted for single dominant slide */
-                             bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl p-8 max-h-[500px] relative overflow-hidden
+                             bg-gradient-to-br from-gray-100 to-gray-200 p-8 max-h-[500px] relative overflow-hidden
                              transition-all duration-500 transform
                              ${index === currentSlide
-                      ? 'opacity-100 z-10 shadow-lg' // Active slide: full opacity, higher z-index, shadow
+                      ? 'opacity-100 z-10 shadow-lg scale-x-120 scale-y-115' // Active slide: full opacity, higher z-index, shadow
                       : 'opacity-60 z-0' // Inactive slides: reduced opacity, lower z-index
                     }`}
                 >
@@ -212,9 +212,13 @@ const BlogGridCarousel = () => {
             aria-label="Previous blog post"
           >
             {/* Custom SVG for left arrow */}
+            <svg width="50" height="30" viewBox="0 0 92 79" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M55.0568 75.885C55.0568 75.885 103.764 53.5389 82.8076 29.0649C61.8514 4.59089 4.90665 24.1295 4.90665 24.1295M4.90665 24.1295L19.3121 1.86156M4.90665 24.1295L27.2097 38.6132" stroke="#0C0642" stroke-width="6" />
+            </svg>
+            {/* }
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="transform rotate-180">
               <path d="M5 12C5 12 8 15 12 15C16 15 19 12 19 12M19 12L15 8M19 12L15 16" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
+            </svg> */}
           </button>
 
           <button
@@ -223,9 +227,13 @@ const BlogGridCarousel = () => {
             aria-label="Next blog post"
           >
             {/* Custom SVG for right arrow (from image) */}
+            <svg width="50" height="30" transform="scaleX(-1) scaleY(-1)" viewBox="0 0 91 79" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M36.3206 75.885C36.3206 75.885 -12.3863 53.5389 8.56987 29.0649C29.526 4.59089 86.4708 24.1295 86.4708 24.1295M86.4708 24.1295L72.0653 1.86156M86.4708 24.1295L64.1677 38.6132" stroke="#0C0642" stroke-width="6" />
+            </svg>
+            {/* }
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M5 12C5 12 8 15 12 15C16 15 19 12 19 12M19 12L15 8M19 12L15 16" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
+            </svg>*/}
           </button>
         </div>
 

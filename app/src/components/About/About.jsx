@@ -32,6 +32,9 @@ export default function About() {
               draggable={false}
               onLoadingComplete={() => setImgLoaded(true)}
               priority
+              style={{
+              boxShadow: '25px 20px 15px rgb(225 216 216 / 30%)'
+            }}
             />
           </div>
         </div>

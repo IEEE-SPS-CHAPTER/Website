@@ -1,10 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useRef } from "react";
+import useOnScreen from "../../hooks/useOnScreen";
 
 export default function About() {
-  const [imgLoaded, setImgLoaded] = useState(false);
+  const ref = useRef(null);
+  const isVisible = useOnScreen(ref, { threshold: 0.3 });
 
   return (
     <section
@@ -17,8 +19,9 @@ export default function About() {
       <div className="relative z-10 w-full max-w-screen-xl mx-auto px-6 py-20 grid grid-cols-1 md:grid-cols-3 gap-12 text-white">
         <div className="flex items-center justify-center md:justify-end">
           <div
+            ref={ref}
             className={`transition-all duration-700 transform ${
-              imgLoaded
+              isVisible
                 ? "translate-x-0 opacity-100"
                 : "-translate-x-20 opacity-0"
             }`}
@@ -27,14 +30,13 @@ export default function About() {
               src="/team.svg"
               alt="IEEE SPS Team"
               width={800}
-              height={600}
+              height={800}
               className="object-contain max-h-[400px]"
               draggable={false}
-              onLoadingComplete={() => setImgLoaded(true)}
               priority
               style={{
-              boxShadow: '25px 20px 15px rgb(225 216 216 / 30%)'
-            }}
+                boxShadow: "25px 20px 15px rgb(225 216 216 / 30%)",
+              }}
             />
           </div>
         </div>

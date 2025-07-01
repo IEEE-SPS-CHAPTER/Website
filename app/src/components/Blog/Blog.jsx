@@ -1,13 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
-// Removed ChevronLeft, ChevronRight from lucide-react as we're using custom SVGs
-import { Plus } from 'lucide-react'; // Plus icon is still used for the card
+import React, { useState, useEffect } from 'react';
 
-const BlogGridCarousel = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const carouselTrackRef = useRef(null); // Ref for the flex container that holds the cards
-  const carouselContainerRef = useRef(null); // Ref for the overflow-hidden container
-  const [cardWidth, setCardWidth] = useState(0);
-  const [containerWidth, setContainerWidth] = useState(0);
+const BlogCardCarousel = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const blogPosts = [
     {
@@ -16,7 +10,7 @@ const BlogGridCarousel = () => {
       readTime: "3 min read",
       author: "Sneha Prasad",
       date: "Mar 23, 2025",
-      excerpt: "Digital Signal Processing (DSP) uses digital systems to analyze and manipulate signals for communication, radar, and data analysis. It filters, modulates, and compresses signals with high accuracy. From aircraft noise reduction to ocean tracking via radar altimeters, DSP plays a key role in modern electronic and satellite systems.",
+      content: "Digital Signal Processing (DSP) uses digital systems to analyze and manipulate signals for communication, radar, and data analysis. It filters, modulates, and compresses signals with high accuracy. From aircraft noise reduction to ocean tracking via radar altimeters, DSP plays a key role in modern electronic and satellite systems.",
       category: "Technology"
     },
     {
@@ -25,7 +19,7 @@ const BlogGridCarousel = () => {
       readTime: "5 min read",
       author: "Sanskar Arora",
       date: "Jan 23, 2022",
-      excerpt: "Electric propulsion uses electricity to accelerate propellants at high speeds, reducing fuel needs and launch costs for space missions. With types like ion and Hall thrusters, it offers high efficiency and specific impulse, making it ideal for deep space travel. This article explores its principles, types, and applications.",
+      content: "Electric propulsion uses electricity to accelerate propellants at high speeds, reducing fuel needs and launch costs for space missions. With types like ion and Hall thrusters, it offers high efficiency and specific impulse, making it ideal for deep space travel. This article explores its principles, types, and applications.",
       category: "Mechanics"
     },
     {
@@ -34,7 +28,7 @@ const BlogGridCarousel = () => {
       readTime: "3 min read",
       author: "Anusha Ghose",
       date: "April 1, 2025",
-      excerpt: "Modern chips, smaller than a red blood cell, power today’s devices by packing billions of transistors into tiny spaces. With innovations like 3D structures and chiplet architecture, manufacturers overcome physical limits to boost performance. This article explores chip miniaturization, challenges, and future advancements in semiconductor technology.",
+      content: "Modern chips, smaller than a red blood cell, power today’s devices by packing billions of transistors into tiny spaces. With innovations like 3D structures and chiplet architecture, manufacturers overcome physical limits to boost performance. This article explores chip miniaturization, challenges, and future advancements in semiconductor technology.",
       category: "Electronics"
     },
     {
@@ -43,7 +37,7 @@ const BlogGridCarousel = () => {
       readTime: "3 min read",
       author: "Akshita",
       date: "Jul 21, 2024",
-      excerpt: "5G mmWave is a high-frequency band in 5G offering ultra-fast data speeds, low latency, and massive capacity. Ideal for urban areas, AR/VR, and IoT, it enables next-gen connectivity. This article explores its features, benefits, challenges, and applications across industries like healthcare, automation, and emergency response systems.",
+      content: "5G mmWave is a high-frequency band in 5G offering ultra-fast data speeds, low latency, and massive capacity. Ideal for urban areas, AR/VR, and IoT, it enables next-gen connectivity. This article explores its features, benefits, challenges, and applications across industries like healthcare, automation, and emergency response systems.",
       category: "Security"
     },
     {
@@ -52,195 +46,160 @@ const BlogGridCarousel = () => {
       readTime: "11 min read",
       author: "Ananya Ghosh",
       date: "Jun 21, 2022",
-      excerpt: "The Internet of Things (IoT) connects everyday devices to the internet, enabling smart automation and remote control. From managing home appliances to improving healthcare and agriculture, IoT simplifies life. This article explores IoT’s architecture, applications, challenges, security concerns, and future scope, highlighting its growing impact across various industries.",
+      content: "The Internet of Things (IoT) connects everyday devices to the internet, enabling smart automation and remote control. From managing home appliances to improving healthcare and agriculture, IoT simplifies life. This article explores IoT’s architecture, applications, challenges, security concerns, and future scope, highlighting its growing impact across various industries.",
       category: "IoT"
     }
   ];
 
-  // Tailwind's default gap-4 is 1rem = 16px
-  const GAP_PX = 16;
+  const nextCard = () => {
+    setCurrentIndex((prev) => (prev + 1) % blogPosts.length);
+  };
 
-  // Effect to measure card and container widths
+  const goToCard = (index) => {
+    setCurrentIndex(index);
+  };
+
+  const getCardClass = (index) => {
+    if (index === currentIndex) return 'active';
+    if (index === (currentIndex + 1) % blogPosts.length) return 'next';
+    return 'prev';
+  };
+
+  // Auto-advance cards
   useEffect(() => {
-    const measureWidths = () => {
-      if (carouselTrackRef.current && carouselContainerRef.current) {
-        const firstCard = carouselTrackRef.current.children[0];
-        if (firstCard) {
-          setCardWidth(firstCard.offsetWidth);
-        }
-        setContainerWidth(carouselContainerRef.current.offsetWidth);
+    const interval = setInterval(nextCard, 10000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        nextCard();
+        e.preventDefault();
+      } else if (e.key === 'ArrowLeft') {
+        setCurrentIndex((prev) => (prev - 1 + blogPosts.length) % blogPosts.length);
+        e.preventDefault();
       }
     };
 
-    // Measure initially
-    measureWidths();
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
-    // Add resize listener
-    window.addEventListener('resize', measureWidths);
-    return () => window.removeEventListener('resize', measureWidths);
-  }, [blogPosts.length]); // Re-measure if blogPosts change
+  const ArrowIcon = () => (
+    <svg width="91" height="79" viewBox="0 0 91 79" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M36.3206 75.885C36.3206 75.885 -12.3863 53.5389 8.56987 29.0649C29.526 4.59089 86.4708 24.1295 86.4708 24.1295M86.4708 24.1295L72.0653 1.86156M86.4708 24.1295L64.1677 38.6132" stroke="#0C0642" stroke-width="6" />
+    </svg>
+  );
 
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % blogPosts.length);
-  };
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + blogPosts.length) % blogPosts.length);
-  };
-
-  // Calculate translateX to center the currentSlide
-  let translateX = 0;
-  if (cardWidth > 0 && containerWidth > 0) {
-    // Calculate the total width of cards up to the current slide (including gaps)
-    const totalWidthBeforeCurrent = currentSlide * (cardWidth + GAP_PX);
-
-    // Calculate the offset needed to center the current card
-    const centeringOffset = (containerWidth / 2) - (cardWidth / 2);
-
-    // The final translation is the negative of the total width before current,
-    // plus the centering offset.
-    translateX = -(totalWidthBeforeCurrent - centeringOffset);
-  }
+  const Star = ({ className }) => (
+    <div className={`absolute text-4xl text-black/30 animate-pulse ${className}`}>
+      ✦
+    </div>
+  );
 
   return (
-    <div className="min-h-screen flex items-center justify-center py-10 px-4 sm:px-6 lg:px-8 relative font-inter overflow-hidden bg-gray-950"
-      style={{
-        backgroundImage: 'radial-gradient(circle at 1px 1px, #ffffff33 1px, transparent 0)',
-        backgroundSize: '20px 20px'
-      }}>
-      {/* Background stars - Placeholder images */}
-      <div className="absolute inset-0 pointer-events-none">
-        <img
-          src="https://placehold.co/30x30/000000/FFFFFF?text=*"
-          alt="Star"
-          className="absolute top-10 right-20 w-8 h-8 opacity-70"
-          onError={(e) => { e.target.onerror = null; e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'%3E%3C/polygon%3E%3C/svg%3E"; }}
-        />
-        <img
-          src="https://placehold.co/20x20/000000/FFFFFF?text=*"
-          alt="Star"
-          className="absolute bottom-20 left-40 w-6 h-6 opacity-70"
-          onError={(e) => { e.target.onerror = null; e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'%3E%3C/polygon%3E%3C/svg%3E"; }}
-        />
-        <img
-          src="https://placehold.co/25x25/000000/FFFFFF?text=*"
-          alt="Star"
-          className="absolute top-1/4 left-1/4 w-7 h-7 opacity-70"
-          onError={(e) => { e.target.onerror = null; e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'%3E%3C/polygon%3E%3C/svg%3E"; }}
-        />
-        <img
-          src="https://placehold.co/35x35/000000/FFFFFF?text=*"
-          alt="Star"
-          className="absolute bottom-10 right-1/4 w-9 h-9 opacity-70"
-          onError={(e) => { e.target.onerror = null; e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'%3E%3C/polygon%3E%3C/svg%3E"; }}
-        />
-      </div>
-
-      <section className="w-full max-w-6xl relative z-10">
-        <h2 className="text-4xl sm:text-5xl font-bold text-white mb-8 sm:mb-12 text-left px-4">
-          Our latest blog
-        </h2>
-
-        <div className="relative w-full">
-          {/* Main Carousel Container - overflow hidden to clip non-visible cards */}
-          <div ref={carouselContainerRef} className="overflow-hidden rounded-3xl py-4">
-            {/* Carousel Track - flex container that slides */}
-            <div
-              ref={carouselTrackRef}
-              className="flex transition-transform duration-500 ease-in-out gap-4" // Using gap-4 for consistent spacing
-              style={{ transform: `translateX(${translateX}px)` }}
-            >
-              {blogPosts.map((post, index) => (
-                <div
-                  key={post.id}
-                  // Responsive widths: full on sm, 1/2 on md, then wider on lg and xl
-                  // flex-shrink-0 to prevent cards from shrinking
-                  className={`flex-none w-full sm:w-[calc(80%-0.5rem)] md:w-[calc(70%-0.5rem)] lg:w-[calc(60%-0.5rem)] xl:w-[calc(50%-0.5rem)] /* Adjusted for single dominant slide */
-                             bg-gradient-to-br from-gray-100 to-gray-200 p-8 max-h-[500px] relative overflow-hidden
-                             transition-all duration-500 transform
-                             ${index === currentSlide
-                      ? 'opacity-100 z-10 shadow-lg scale-x-120 scale-y-115' // Active slide: full opacity, higher z-index, shadow
-                      : 'opacity-60 z-0' // Inactive slides: reduced opacity, lower z-index
-                    }`}
-                >
-                  {/* Content */}
-                  <div className="relative z-10 flex flex-col h-full">
-                    <div className="flex justify-between items-start mb-6">
-                      <div className="text-blue-600 px-3 py-1 rounded-full text-sm font-medium bg-blue-100">
-                        {post.category}
-                      </div>
-                      <button className="text-gray-400 hover:text-gray-600 transition-colors">
-                        <Plus className="w-5 h-5" />
-                      </button>
-                    </div>
-
-                    <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4 leading-tight">
-                      {post.title}
-                    </h3>
-
-                    <div className="flex items-center gap-4 text-sm text-gray-600 mb-6">
-                      <span>{post.readTime}</span>
-                      <span>•</span>
-                      <span>{post.author}</span>
-                      <span>•</span>
-                      <span>{post.date}</span>
-                    </div>
-
-                    <p className="text-gray-700 text-base leading-relaxed flex-grow line-clamp-5">
-                      {post.excerpt}
-                    </p>
-
-                    {/* Read More Button */}
-                    <button className="mt-6 inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full font-medium transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/25 transform hover:scale-105 self-start">
-                      Read More
-                      {/* Removed ChevronRight here as it was causing the error */}
-                    </button>
-                  </div>
-
-                  {/* Decorative Elements */}
-                  <div className="absolute top-8 right-8 text-gray-300/20 text-6xl select-none">✦</div>
-                  <div className="absolute bottom-8 left-8 text-gray-300/20 text-4xl select-none">✦</div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Navigation Buttons */}
-          <button
-            onClick={prevSlide}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-3 transition-all duration-300 border border-white/20"
-            aria-label="Previous blog post"
-          >
-            {/* Custom SVG for left arrow */}
-            <svg width="50" height="30" viewBox="0 0 92 79" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M55.0568 75.885C55.0568 75.885 103.764 53.5389 82.8076 29.0649C61.8514 4.59089 4.90665 24.1295 4.90665 24.1295M4.90665 24.1295L19.3121 1.86156M4.90665 24.1295L27.2097 38.6132" stroke="#0C0642" stroke-width="6" />
-            </svg>
-            {/* }
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="transform rotate-180">
-              <path d="M5 12C5 12 8 15 12 15C16 15 19 12 19 12M19 12L15 8M19 12L15 16" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg> */}
-          </button>
-
-          <button
-            onClick={nextSlide}
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-3 transition-all duration-300 border border-white/20"
-            aria-label="Next blog post"
-          >
-            {/* Custom SVG for right arrow (from image) */}
-            <svg width="50" height="30" transform="scaleX(-1) scaleY(-1)" viewBox="0 0 91 79" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M36.3206 75.885C36.3206 75.885 -12.3863 53.5389 8.56987 29.0649C29.526 4.59089 86.4708 24.1295 86.4708 24.1295M86.4708 24.1295L72.0653 1.86156M86.4708 24.1295L64.1677 38.6132" stroke="#0C0642" stroke-width="6" />
-            </svg>
-            {/* }
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M5 12C5 12 8 15 12 15C16 15 19 12 19 12M19 12L15 8M19 12L15 16" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>*/}
-          </button>
+    <div className="w-full min-h-screen bg-white  flex items-center justify-center p-5 overflow-hidden">
+      <div className="max-w-6xl w-full relative">
+        {/* Header */}
+        <div className="text-left mb-16 relative">
+          <h1 className="text-8xl md:text-6xl font-black text-gray-800 mb-4 drop-shadow-lg">
+            Our latest blog
+          </h1>
+          <Star className="top-[-200px] right-48 animate-[twinkle_3s_ease-in-out_infinite_alternate]" />
+          <Star className="top-120 right-12 animate-[twinkle_3s_ease-in-out_infinite_alternate_1s]" />
+          <Star className="bottom-[-500px] left-[-10] animate-[twinkle_3s_ease-in-out_infinite_alternate_2s]" />
+          <Star className="top-40 left-[-10px] animate-[twinkle_3s_ease-in-out_infinite_alternate_0.5s]" />
+          <Star className="bottom-[-200px] right-28 animate-[twinkle_3s_ease-in-out_infinite_alternate]" />
+          <Star className="bottom-12 right-12 animate-[twinkle_3s_ease-in-out_infinite_alternate_1s]" />
+          <Star className="bottom-[-300px] left-10 animate-[twinkle_3s_ease-in-out_infinite_alternate_2s]" />
+          <Star className="top-8 left-[-50px] animate-[twinkle_3s_ease-in-out_infinite_alternate_0.5s]" />
         </div>
 
-        {/* Removed Pagination Dots */}
-      </section>
+        {/* Card Container */}
+        <div className="relative h-[500px] flex items-center justify-center">
+          {blogPosts.map((post, index) => (
+            <div
+              key={index}
+              className={`
+                absolute w-full max-w-[800px] md:w-[900px] overflow-hidden h-[550px] bg-white/95 backdrop-blur-md 
+                rounded-3xl p-10 shadow-2xl border border-white/20 transition-all duration-700 ease-out
+                ${getCardClass(index) === 'active'
+                  ? 'translate-x-0 scale-100 z-30 opacity-100'
+                  : getCardClass(index) === 'next'
+                    ? 'translate-x-12 scale-95 z-20 '
+                    : 'translate-x-[-100px] scale-90 z-10 '
+                }
+              `}
+            >
+              <div className="mb-6">
+                <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4 leading-tight">
+                  {post.title}
+                </h2>
+                <div className="flex items-center gap-4 mb-5 text-sm text-gray-600">
+                  <span className="bg-gray-200 px-3 py-1 rounded-full font-medium">
+                    {post.readTime}
+                  </span>
+                  <div className="flex flex-col gap-1">
+                    <span className="font-semibold text-gray-700">{post.author}</span>
+                    <span className="text-xs">{post.date}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="text-lg leading-relaxed text-gray-700 text-justify">
+                {post.content}
+              </div>
+
+              {/* Navigation Arrow */}
+              <button
+                onClick={nextCard}
+                className="group absolute right-8 bottom-8 w-15 h-15 bg-gradient-to-r from-gray-400 to-gray-300 rounded-full flex items-center justify-center cursor-pointer transition-all duration-300 hover:scale-110 hover:shadow-2xl shadow-lg z-40"
+                aria-label="Next blog post"
+              >
+                <ArrowIcon />
+              </button>
+            </div>
+          ))}
+        </div>
+
+        {/* Progress Dots */}
+        <div className="flex justify-center gap-3 mt-20">
+          {blogPosts.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => goToCard(index)}
+              className={`
+                w-3 h-3 rounded-full transition-all duration-300 cursor-pointer
+                ${index === currentIndex
+                  ? 'bg-white scale-125'
+                  : 'bg-white/30 hover:bg-white/50'
+                }
+              `}
+              aria-label={`Go to blog post ${index + 1}`}
+            />
+          ))}
+        </div>
+      </div>
+
+      <style jsx>{`
+        @keyframes twinkle {
+          0% { opacity: 0.3; transform: scale(1); }
+          100% { opacity: 0.8; transform: scale(1.2); }
+        }
+        
+        @media (max-width: 768px) {
+          .card {
+            width: 90%;
+            max-width: 400px;
+            height: 350px;
+            padding: 1.5rem;
+          }
+        }
+      `}</style>
     </div>
   );
 };
 
-export default BlogGridCarousel;
+export default BlogCardCarousel;

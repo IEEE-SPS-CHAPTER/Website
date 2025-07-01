@@ -16,7 +16,7 @@ const BlogGridCarousel = () => {
       readTime: "3 min read",
       author: "Sneha Prasad",
       date: "Mar 23, 2025",
-      excerpt: "Digital Signal Processing (DSP) uses digital processing with the help of devices like digital signal processors, computers to perform signal processing operations. In digital electronics a digital signal is represented as a pulse train. DSP is also used in digital technology like digital communication and wireless communications. DSP is used in aircrafts for noise reduction to ensure clear communication",
+      excerpt: "Digital Signal Processing (DSP) uses digital systems to analyze and manipulate signals for communication, radar, and data analysis. It filters, modulates, and compresses signals with high accuracy. From aircraft noise reduction to ocean tracking via radar altimeters, DSP plays a key role in modern electronic and satellite systems.",
       category: "Technology"
     },
     {
@@ -25,16 +25,16 @@ const BlogGridCarousel = () => {
       readTime: "5 min read",
       author: "Sanskar Arora",
       date: "Jan 23, 2022",
-      excerpt: "Electric propulsion is a technology aimed at achieving thrust with high exhaust velocities, which results in a reduction in the amount of propellant required for a given space mission or application compared to other conventional propulsion methods. Reduced propellant mass can significantly decrease the launch mass of a spacecraft or satellite, leading to lower costs from the use of smaller launch vehicles to deliver desired mass into a given orbit or to a deep-space target.",
+      excerpt: "Electric propulsion uses electricity to accelerate propellants at high speeds, reducing fuel needs and launch costs for space missions. With types like ion and Hall thrusters, it offers high efficiency and specific impulse, making it ideal for deep space travel. This article explores its principles, types, and applications.",
       category: "Mechanics"
     },
     {
       id: 3,
-      title: "CHIP MANUFACTURING : A DIVE INTO ONE OF HUMANITY’S GREATEST SCIENTIFIC FEATS IEEE Signal Processing Society-VIT",
+      title: "CHIP MANUFACTURING : A DIVE INTO ONE OF HUMANITY’S GREATEST SCIENTIFIC FEATS",
       readTime: "3 min read",
       author: "Anusha Ghose",
       date: "April 1, 2025",
-      excerpt: "What if I told you that there are components in your phone smaller than an average red blood cell? It is hard to believe or even envision such a thing, but today almost every chip works on this intriguing principle. The realm of electronics is a limitless one and the continuous innovations in this miniature world of chips is a driving factor towards revolutionizing how we use gadgets ,often defying the principles of physics. Presently, there are only 3 companies in the world capable of mass-producing chips, small and powerful enough, to fit today’s advanced mobile technologies.",
+      excerpt: "Modern chips, smaller than a red blood cell, power today’s devices by packing billions of transistors into tiny spaces. With innovations like 3D structures and chiplet architecture, manufacturers overcome physical limits to boost performance. This article explores chip miniaturization, challenges, and future advancements in semiconductor technology.",
       category: "Electronics"
     },
     {
@@ -43,7 +43,7 @@ const BlogGridCarousel = () => {
       readTime: "3 min read",
       author: "Akshita",
       date: "Jul 21, 2024",
-      excerpt: "We’ve all heard about 5G network and use it on daily basis today since its market boomed in 2019. But let us here explore one of its most growing and exciting aspect: 5G mmWave.",
+      excerpt: "5G mmWave is a high-frequency band in 5G offering ultra-fast data speeds, low latency, and massive capacity. Ideal for urban areas, AR/VR, and IoT, it enables next-gen connectivity. This article explores its features, benefits, challenges, and applications across industries like healthcare, automation, and emergency response systems.",
       category: "Security"
     },
     {
@@ -52,7 +52,7 @@ const BlogGridCarousel = () => {
       readTime: "11 min read",
       author: "Ananya Ghosh",
       date: "Jun 21, 2022",
-      excerpt: "Have you ever experienced such a situation where you went outside your house and suddenly remembered that you forgot to switch off your electronics, AC, fan, or light and felt helpless that you cannot return home to switch it off? Have you ever felt that there is a need for regular checkups of the elderly person at your home, but it is very inconvenient to take him out regularly? This is where IoT comes into the picture. Using the mobile/ web application, you can access your home appliances integrated with IoT from anywhere around the world. IoT can remind you of the essential tasks that you often forget to do. This technology reduces human efforts and saves a lot of time. All this is possible due to the connection of the IoT devices over the Internet servers that helps in sharing and exchanging the data.",
+      excerpt: "The Internet of Things (IoT) connects everyday devices to the internet, enabling smart automation and remote control. From managing home appliances to improving healthcare and agriculture, IoT simplifies life. This article explores IoT’s architecture, applications, challenges, security concerns, and future scope, highlighting its growing impact across various industries.",
       category: "IoT"
     }
   ];

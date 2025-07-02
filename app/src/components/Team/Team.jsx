@@ -1,69 +1,145 @@
-"use client";
+import Image from 'next/image';
+import React, { useEffect, useRef } from 'react';
+import teamMembers from '../../data/Team.js';
 
-import Image from "next/image";
-import { motion } from "framer-motion";
-import teamMembers from "../../data/Team";
+// TeamSection component for displaying club members with a pop-in animation
+const TeamSection = () => {
+  // useRef to get a reference to the container of team member cards
+  const containerRef = useRef(null);
 
-export default function Team() {
-  const floatVariants = {
-    animate: (i) => ({
-      y: [0, -20, 0, 20, 0],
-      x: [0, 10 * (i % 2 === 1 ? 1 : -1), 0, -10 * (i % 2 === 1 ? 1 : -1), 0],
-      transition: {
-        duration: 8 + (i % 3),
-        repeat: Infinity,
-        ease: "easeInOut",
-      },
-    }),
-  };
+  useEffect(() => {
+    // Ensure the DOM is loaded and the container reference exists
+    if (!containerRef.current) return;
+
+    // Select all team member cards within the container
+    const teamMemberCards = containerRef.current.querySelectorAll('.team-member-card');
+
+    // Options for the Intersection Observer
+    const observerOptions = {
+      root: null, // Use the viewport as the root
+      rootMargin: '0px', // No margin around the root
+      threshold: 0.1 // Trigger when 10% of the item is visible
+    };
+
+    // Callback function for the Intersection Observer
+    const observerCallback = (entries, observer) => {
+      entries.forEach(entry => {
+        // If the card is intersecting (visible)
+        if (entry.isIntersecting) {
+          // Add the animation class to trigger the pop-in effect
+          entry.target.classList.add('animate-pop-in');
+          // Stop observing the card once it has animated
+          observer.unobserve(entry.target);
+        }
+      });
+    };
+
+    // Create a new Intersection Observer instance
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    // Observe each team member card to detect when it enters the viewport
+    teamMemberCards.forEach(card => {
+      observer.observe(card);
+    });
+
+    // Cleanup function: Disconnect the observer when the component unmounts
+    return () => {
+      teamMemberCards.forEach(card => {
+        observer.unobserve(card);
+      });
+      observer.disconnect();
+    };
+  }, []); // Empty dependency array ensures this effect runs only once after initial render
 
   return (
-    <section
-      id="team"
-      className="w-full min-h-screen flex flex-col items-center justify-start bg-cover bg-center px-4 sm:px-6 md:px-8 py-8 md:py-12"
-      style={{
-        backgroundImage: "url('/team-bg.svg')",
-        backgroundBlendMode: "overlay",
-      }}
-    >
-      <h2 className="text-center font-inter font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-[#EAEBED] drop-shadow-lg mb-8 sm:mb-10 md:mb-12">
-        Meet the Team
-      </h2>
+    <>
+      {/* Tailwind CSS CDN (for demonstration purposes in a standalone immersive) */}
+      {/* In a real Next.js project, Tailwind would be configured and imported differently */}
+      <script src="https://cdn.tailwindcss.com"></script>
+      {/* Google Fonts - Inter */}
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
-      <div className="relative w-full max-w-7xl">
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6 md:gap-8 auto-rows-auto lg:max-h-[70vh]">
-          {teamMembers.map((member, idx) => (
-            <motion.div
-              key={member.name}
-              className="flex flex-col items-center"
-              custom={idx}
-              variants={floatVariants}
-              animate="animate"
-              initial={false}
-            >
-              <div className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36 xl:w-40 xl:h-40 rounded-full overflow-hidden border-4 border-[#23272f] shadow-2xl bg-gradient-to-br from-[#23272f] to-[#181b22]">
-                <Image
-                  src={member.image}
-                  alt={member.name}
-                  fill
-                  sizes="(max-width: 640px) 96px, (max-width: 768px) 128px, (max-width: 1024px) 144px, 160px"
-                  className="object-cover w-full h-full rounded-full"
-                  style={{ objectPosition: member.objectPosition || "center" }}
-                  priority={idx < 3}
-                />
-                <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/50 text-center px-2">
-                  <div className="text-xs sm:text-sm md:text-base text-white font-semibold truncate w-full">
-                    {member.name}
-                  </div>
-                  <div className="text-[10px] sm:text-xs md:text-sm text-[#00d0ff] font-medium truncate w-full">
-                    {member.designation}
+      {/* Custom CSS for animations and scrollbar styling */}
+      {/* In a real Next.js project, this would typically be in a global CSS file or a CSS module */}
+      <style>{`
+        body {
+          font-family: 'Inter', sans-serif;
+          background-color: #f8fafc; /* Light blue-gray background */
+        }
+
+        /* Custom pop-in animation */
+        @keyframes popIn {
+          0% {
+            opacity: 0;
+            transform: scale(0.8) translateY(20px);
+          }
+          100% {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+          }
+        }
+
+        /* Class to apply the animation */
+        .animate-pop-in {
+          animation: popIn 0.6s ease-out forwards;
+        }
+
+        /* Initial state before animation */
+        .team-member-card {
+          opacity: 0; /* Hidden by default */
+          transform: scale(0.8) translateY(20px); /* Slightly smaller and lower */
+          transition: opacity 0.3s ease-out, transform 0.3s ease-out; /* Smooth transition for initial load (though JS handles visibility) */
+          flex-shrink: 0; /* Prevent cards from shrinking */
+          width: 300px; /* Fixed width for cards in horizontal scroll */
+        }
+
+        /* Custom scrollbar styling for Webkit browsers (Chrome, Safari) */
+        .horizontal-scroll-container::-webkit-scrollbar {
+          height: 8px;
+        }
+
+        .horizontal-scroll-container::-webkit-scrollbar-track {
+          background: #e2e8f0; /* Light gray track */
+          border-radius: 10px;
+        }
+
+        .horizontal-scroll-container::-webkit-scrollbar-thumb {
+          background: #a78bfa; /* Indigo thumb */
+          border-radius: 10px;
+        }
+
+        .horizontal-scroll-container::-webkit-scrollbar-thumb:hover {
+          background: #8b5cf6; /* Darker indigo on hover */
+        }
+      `}</style>
+
+      <section id="team" className="py-16 px-4 sm:px-6 lg:px-8 bg-[url('/bg-team.png')] bg-cover bg-center min-h-screen flex items-center justify-center">
+        <div className="max-w-7xl mx-auto text-left w-full">
+          <h2 className="text-4xl sm:text-5xl font-bold text-shadow-md text-white-800 tracking-tight">Meet Our Team</h2>
+
+          {/* Horizontal Scroll Container */}
+          <div ref={containerRef} className="flex overflow-x-auto gap-8 pb-6 px-2 horizontal-scroll-container scroll-smooth">
+            {/* Team Member Card 1 */}
+            {teamMembers.map((member) => (
+
+              <div className="team-member-card relative transition-all duration-300">
+                <div className="relative top-65 z-10">
+                  <img className="" src={member.image} alt="" />
+                </div>
+                <div className="relative w-full bg-linear-to-t from-sky-100/25 to-blue-400/25 w-72 backdrop-blur-sm shadow-xl rounded-xl h-64 top-1 z-0" />
+                <div className="card-content z-20 relative bottom-8">
+                  <div className="bg-sky-300 rounded-2xl w-max px-12 py-2 mx-auto">
+                    <h3 className="text-xl font-semibold text-gray-900 mb-1">{member.name}</h3>
+                    <p className="text-indigo-700 text-sm font-medium">{member.designation}</p>
                   </div>
                 </div>
               </div>
-            </motion.div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </section >
+    </>
   );
-}
+};
+
+export default TeamSection;

@@ -173,8 +173,8 @@ const BlogCardCarousel = () => {
               className={`
                 w-3 h-3 rounded-full transition-all duration-300 cursor-pointer
                 ${index === currentIndex
-                  ? 'bg-white scale-125'
-                  : 'bg-white/30 hover:bg-white/50'
+                  ? 'bg-gray-500 scale-125'
+                  : 'bg-gray-400/30 hover:bg-white/50'
                 }
               `}
               aria-label={`Go to blog post ${index + 1}`}

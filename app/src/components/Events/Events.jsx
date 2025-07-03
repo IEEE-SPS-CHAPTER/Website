@@ -6,19 +6,18 @@ import events from "../../data/Events";
 
 const Events = () => {
   return (
-    <section id="events">
+    <section id="events" className="bg-[url('/gradient-bg-dark.svg')] bg-cover">
       <h2
         style={{
           fontFamily: "Inter",
           fontStyle: "normal",
           fontWeight: 700,
-          fontSize: "64px",
           lineHeight: "77px",
           color: "#EAEBED",
           background: "transparent",
-          textAlign: "center",
+          textAlign: "left",
           width: "100%",
-        }}
+        }} className="ml-[20%] text-7xl"
       >
         Events
       </h2>

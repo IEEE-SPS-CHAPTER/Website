@@ -113,9 +113,9 @@ const TeamSection = () => {
         }
       `}</style>
 
-      <section id="team" className="py-16 px-4 sm:px-6 lg:px-8 bg-[url('/bg-team.png')] bg-cover bg-center min-h-screen flex items-center justify-center">
+      <section id="team" className="py-16 px-4 sm:px-6 lg:px-8 bg-[url('/gradient-bg-light.svg')] bg-cover min-h-screen flex items-center justify-center">
         <div className="max-w-7xl mx-auto text-left w-full">
-          <h2 className="text-4xl sm:text-5xl font-bold text-shadow-md text-white-800 tracking-tight">Meet Our Team</h2>
+          <h2 className="text-4xl sm:text-7xl font-bold text-shadow-md text-black tracking-tight">Meet Our Team</h2>
 
           {/* Horizontal Scroll Container */}
           <div ref={containerRef} className="flex overflow-x-auto gap-8 pb-6 px-2 horizontal-scroll-container scroll-smooth">

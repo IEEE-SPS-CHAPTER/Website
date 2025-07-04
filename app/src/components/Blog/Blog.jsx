@@ -100,17 +100,17 @@ const BlogCardCarousel = () => {
   );
 
   return (
-    <div className="w-full min-h-screen bg-white  flex items-center justify-center p-5 overflow-hidden">
+    <section className="w-full min-h-screen bg-white  flex items-center justify-center p-5 overflow-hidden z-10">
       <div className="max-w-6xl w-full relative">
         {/* Header */}
         <div className="text-left mb-16 relative">
-          <h1 className="text-8xl md:text-6xl font-black text-gray-800 mb-4 drop-shadow-lg">
+          <h1 className="text-5xl md:text-6xl font-black text-gray-800 mb-4 drop-shadow-lg">
             Our latest blog
           </h1>
           <Star className="top-[-200px] right-48 animate-[twinkle_3s_ease-in-out_infinite_alternate]" />
           <Star className="top-120 right-12 animate-[twinkle_3s_ease-in-out_infinite_alternate_1s]" />
-          <Star className="bottom-[-500px] left-[-10] animate-[twinkle_3s_ease-in-out_infinite_alternate_2s]" />
-          <Star className="top-40 left-[-10px] animate-[twinkle_3s_ease-in-out_infinite_alternate_0.5s]" />
+          <Star className="bottom-[-700px] left-5 animate-[twinkle_3s_ease-in-out_infinite_alternate_2s]" />
+          <Star className="top-40 left-[-20px] animate-[twinkle_3s_ease-in-out_infinite_alternate_0.5s]" />
           <Star className="bottom-[-200px] right-28 animate-[twinkle_3s_ease-in-out_infinite_alternate]" />
           <Star className="bottom-12 right-12 animate-[twinkle_3s_ease-in-out_infinite_alternate_1s]" />
           <Star className="bottom-[-300px] left-10 animate-[twinkle_3s_ease-in-out_infinite_alternate_2s]" />
@@ -173,8 +173,8 @@ const BlogCardCarousel = () => {
               className={`
                 w-3 h-3 rounded-full transition-all duration-300 cursor-pointer
                 ${index === currentIndex
-                  ? 'bg-gray-500 scale-125'
-                  : 'bg-gray-400/30 hover:bg-white/50'
+                  ? 'bg-white scale-125'
+                  : 'bg-white/30 hover:bg-white/50'
                 }
               `}
               aria-label={`Go to blog post ${index + 1}`}
@@ -198,7 +198,7 @@ const BlogCardCarousel = () => {
           }
         }
       `}</style>
-    </div>
+    </section>
   );
 };
 

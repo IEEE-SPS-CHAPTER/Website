@@ -1,12 +1,17 @@
+"use client"; // Keep this if using App Router
+
 import Image from "next/image";
 import CheckBlog from "./CheckBlog/CheckBlog";
 import HeroGlobe from "./HeroGlobe/HeroGlobe";
+import React, { forwardRef } from "react"; // Import forwardRef
 
-export default function Hero() {
+// Wrap the Hero component with forwardRef
+const Hero = forwardRef((props, ref) => {
   return (
     <section
       id="hero"
-      className="relative flex items-center justify-center px-8 overflow-hidden min-h-screen"
+      ref={ref} // Attach the forwarded ref to the section element
+      className="relative flex items-center justify-center px-8 overflow-hidden min-h-screen z-10"
     >
       {/* Main content container */}
       <div style={{ zIndex: 1 }} className="w-full max-w-7xl mx-auto">
@@ -28,14 +33,10 @@ export default function Hero() {
 
         </div>
       </div>
-
-      <Image
-        src="/hero-bg.svg"
-        alt="Hero Background"
-        fill
-        style={{ objectFit: "cover", zIndex: 0 }}
-        priority
-      />
+      {/* The original Image component for hero-bg.svg is commented out here,
+          as ScrollBlurBackground will handle the main fixed background. */}
     </section>
   );
-}
+});
+
+export default Hero;

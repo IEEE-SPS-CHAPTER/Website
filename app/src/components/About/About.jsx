@@ -1,37 +1,31 @@
 "use client";
 
 import Image from "next/image";
-import { useRef } from "react";
-import useOnScreen from "../../hooks/useOnScreen";
+import React, { forwardRef } from "react"; // Import forwardRef
 
-export default function About() {
-  const ref = useRef(null);
-  const isVisible = useOnScreen(ref, { threshold: 0.3 });
-
+// Use forwardRef to allow parent components to pass a ref to this component
+const About = forwardRef((props, ref) => {
   return (
     <section
       id="about"
-      className="flex items-center justify-center bg-cover bg-center relative"
-      style={{ backgroundImage: "url('/about-bg.svg')" }}
+      ref={ref} // Attach the forwarded ref to the root section element
+      className="flex items-center justify-center relative z-10 min-h-screen p-5
+                text-white" /* Added bg-opacity for readability over blurred background */
     >
-      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm z-0" />
+      {/* Removed the absolute inset-0 div with backdrop-blur-sm as global blur is handled by ScrollBlurBackground */}
 
-      <div className="relative z-10 w-full max-w-screen-xl mx-auto px-6 py-20 grid grid-cols-1 md:grid-cols-3 gap-12 text-white">
+      <div className="relative z-10 w-full max-w-screen-xl mx-auto px-6 py-20 grid grid-cols-1 md:grid-cols-3 gap-12">
         <div className="flex items-center justify-center md:justify-end">
           <div
-            ref={ref}
-            className={`transition-all duration-700 transform ${
-              isVisible
-                ? "translate-x-0 opacity-100"
-                : "-translate-x-20 opacity-0"
-            }`}
+          /* Removed ref={ref} and className for useOnScreen animation.
+             The ref passed to About is for ScrollBlurBackground to measure position. */
           >
             <Image
               src="/team.svg"
               alt="IEEE SPS Team"
               width={800}
               height={800}
-              className="object-contain max-h-[400px]"
+              className="object-contain max-h-[400px] rounded-lg" /* Added rounded-lg for better aesthetics */
               draggable={false}
               priority
               style={{
@@ -42,6 +36,7 @@ export default function About() {
         </div>
 
         <div className="md:col-span-2 text-lg leading-relaxed space-y-5">
+          <h2 className="text-4xl font-bold mb-4">About Us</h2> {/* Added a heading for clarity */}
           <p>
             The Signal Processing Society (SPS), founded in 1948 under IEEE, is
             a leading global organization for signal processing professionals.
@@ -64,4 +59,6 @@ export default function About() {
       </div>
     </section>
   );
-}
+});
+
+export default About;

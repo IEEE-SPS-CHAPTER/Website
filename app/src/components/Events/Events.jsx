@@ -6,7 +6,7 @@ import events from "../../data/Events";
 
 const Events = () => {
   return (
-    <section id="events" className="bg-[url('/gradient-bg-dark.svg')] bg-cover">
+    <section id="events" className="bg-[url('/gradient-bg-dark.svg')] bg-cover z-10 ">
       <h2
         style={{
           fontFamily: "Inter",

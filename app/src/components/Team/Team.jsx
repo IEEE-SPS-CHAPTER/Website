@@ -120,9 +120,9 @@ const TeamSection = () => {
           {/* Horizontal Scroll Container */}
           <div ref={containerRef} className="flex overflow-x-auto gap-8 pb-6 px-2 horizontal-scroll-container scroll-smooth">
             {/* Team Member Card 1 */}
-            {teamMembers.map((member) => (
+            {teamMembers.map((member, idx) => (
 
-              <div className="team-member-card relative transition-all duration-300">
+              <div key={idx} className="team-member-card relative transition-all duration-300">
                 <div className="relative top-65 z-10">
                   <img className="" src={member.image} alt="" />
                 </div>

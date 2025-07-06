@@ -23,8 +23,8 @@ export default function Home() {
           It must be rendered at the top of the main content to be behind other sections. */}
       <ScrollBlurBackground
         aboutSectionRef={aboutSectionRef}
-        // If you had a team section and wanted the background to scroll away, you'd pass:
-        // teamSectionRef={teamSectionRef}
+      // If you had a team section and wanted the background to scroll away, you'd pass:
+      // teamSectionRef={teamSectionRef}
       />
 
       {/* Your Hero Section */}
@@ -39,6 +39,7 @@ export default function Home() {
       {/* Other sections of your page */}
       <BlogSection />
       <EventsSection />
+      <div className="w-full h-24 bg-gradient-to-b from-black to-[#E8F2FD] z-10"></div>
       {/* If TeamSection also uses forwardRef and you want to track it, you could pass its ref here */}
       <TeamSection />
       <ContactSection />

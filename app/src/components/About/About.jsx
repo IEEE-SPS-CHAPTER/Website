@@ -1,3 +1,4 @@
+
 "use client";
 
 import Image from "next/image";
@@ -72,47 +73,36 @@ const About = forwardRef((props, ref) => {
         else if (ref) ref.current = node;
       }}
       className="flex items-center justify-center bg-cover bg-center relative z-10 min-h-screen p-5 text-white"
-      style={{ backgroundImage: "url('/about-bg.svg')" }}
+    //style={{ backgroundImage: "url('/about-bg.svg')" }}
     >
-      <div className="relative z-10 w-full max-w-screen-xl mx-auto px-6 py-20 grid grid-cols-1 md:grid-cols-3 gap-12">
-        <div className="flex items-center justify-center md:justify-end">
+      <div className="relative z-10 w-full max-w-screen-xl mx-auto px-6 py-20 grid grid-cols-2 gap-12">
+        <div className="flex items-center justify-center md:col-span-1 md:justify-end">
           <div
             className={`transition-all duration-700 transform ${isVisible ? "translate-x-0 opacity-100" : "-translate-x-20 opacity-0"
-              }`}
-          >
-            {/* Optional animated image or element */}
+              }`}>
+            <Image
+              src="/team.svg"
+              alt="IEEE SPS Team"
+              width={400}
+              height={600}
+              className="object-contain max-h-[400px]"
+              draggable={false}
+              priority
+              style={{
+                boxShadow: "25px 20px 15px rgb(225 216 216 / 30%)",
+              }}
+            />
           </div>
         </div>
-
-        <div className="md:col-span-2 text-lg leading-relaxed space-y-5">
+        <div className=" text-lg leading-relaxed space-y-5 ">
           <h2 className="text-4xl font-bold mb-4">About Us</h2>
-          <p>
-            The Signal Processing Society (SPS), founded in 1948 under IEEE, is
-            a leading global organization for signal processing professionals.
-          </p>
-          <p>
-            The IEEE SPS VIT Chapter at VIT University in Vellore actively works
-            towards connecting this global network with students, hosting
-            various events such as webinars, hands-on sessions, and hackathons.
-          </p>
-          <p>
-            Our flagship event, “HACKX,” launched in 2019 and was followed by
-            “HACKX 2.0” in 2023, successfully featuring distinguished speakers
-            and participants from top universities.
-          </p>
-          <p>
-            We are dedicated to fostering an environment where engineers can
-            explore key areas such as signal processing, IoT, and machine
-            learning, encouraging innovation and collaboration.
-          </p>
-
           <div className="text-xl leading-relaxed space-y-5 pt-4">
             <p>{renderAnimatedParagraph(para1, 0.0, 0.25)}</p>
             <p>{renderAnimatedParagraph(para2, 0.25, 0.5)}</p>
           </div>
         </div>
       </div>
-    </section>
+    </section >
   );
 });
 

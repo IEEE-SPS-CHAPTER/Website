@@ -10,17 +10,18 @@ const Events = () => {
       <h2
         style={{
           fontFamily: "Inter",
-          fontStyle: "normal",
           fontWeight: 700,
           lineHeight: "77px",
           color: "#EAEBED",
           background: "transparent",
           textAlign: "left",
           width: "100%",
-        }} className="ml-[20%] text-7xl"
+        }}
+        className="ml-[10%] md:ml-[20%] text-5xl md:text-7xl"
       >
         Events
       </h2>
+
       <div className={styles.wrapper}>
         <div className={styles.inner} style={{ "--quantity": events.length }}>
           {events.map((card, i) => (

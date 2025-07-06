@@ -6,9 +6,8 @@
   justify-content: center;
   overflow: visible;
   perspective: 1200px;
-  padding-top: 300px;
-  margin-top: 100px;
-
+  padding-top: 150px;
+  margin-top: 80px;
 }
 
 .inner {
@@ -17,12 +16,13 @@
   --translateZ: 250px;
   --rotateX: -10deg;
   --perspective: 700px;
+
   position: absolute;
   width: var(--w);
   height: var(--h);
   top: 25%;
-  left: calc(50% - (var(--w) / 2) - 2.5px);
-  z-index: 2;
+  left: 50%;
+  transform: translateX(-50%);
   transform-style: preserve-3d;
   animation: rotating 20s linear infinite;
 }
@@ -45,16 +45,15 @@
   border: 2px solid rgba(var(--color-card), 0.8);
   border-radius: 20px;
   overflow: hidden;
-  inset: 0;
   background-color: rgba(var(--color-card), 0.15);
   box-shadow: 0 8px 16px rgba(var(--color-card), 0.3);
-  cursor: pointer;
-  transition: box-shadow 0.3s ease;
   transform: rotateY(calc((360deg / var(--quantity)) * var(--index)))
     translateZ(var(--translateZ));
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease;
   -webkit-backdrop-filter: blur(1px);
   backdrop-filter: blur(1px);
 }
@@ -64,8 +63,42 @@
 }
 
 .card img {
-  max-width: 90%;
-  max-height: 90%;
+  max-width: 85%;
+  max-height: 85%;
   object-fit: contain;
   border-radius: 3px;
+}
+
+/* ✅ Responsive Tweaks */
+@media (max-width: 768px) {
+  .inner {
+    --w: 120px;
+    --h: 150px;
+    --translateZ: 180px;
+    animation-play-state: paused; /* Pause for better UX */
+  }
+
+  .card {
+    pointer-events: auto;
+    transform: rotateY(calc((360deg / var(--quantity)) * var(--index)))
+      translateZ(var(--translateZ));
+  }
+
+  .wrapper {
+    padding-top: 100px;
+    margin-top: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .inner {
+    --w: 100px;
+    --h: 120px;
+    --translateZ: 140px;
+  }
+
+  .card img {
+    max-width: 80%;
+    max-height: 80%;
+  }
 }

@@ -113,7 +113,7 @@ const TeamSection = () => {
         }
       `}</style>
 
-      <section id="team" className="py-16 px-4 sm:px-6 lg:px-8 bg-[url('/gradient-bg-light.svg')] bg-cover min-h-screen flex items-center justify-center">
+      <section id="team" className="z-10 py-16 px-4 sm:px-6 lg:px-8 bg-[url('/gradient-bg-light.svg')] bg-cover min-h-screen flex items-center justify-center">
         <div className="max-w-7xl mx-auto text-left w-full">
           <h2 className="text-4xl sm:text-7xl font-bold text-shadow-md text-black tracking-tight">Meet Our Team</h2>
 

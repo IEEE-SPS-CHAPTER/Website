@@ -1,13 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, useState, useEffect } from "react";
+import React, { forwardRef, useRef, useState, useEffect } from "react";
 import useOnScreen from "../../hooks/useOnScreen";
 
-export default function About() {
+const About = forwardRef((props, ref) => {
   const sectionRef = useRef(null);
   const isVisible = useOnScreen(sectionRef, { threshold: 0.2 });
-
   const [scrollProgress, setScrollProgress] = useState(0);
 
   const para1 =
@@ -40,11 +39,9 @@ export default function About() {
     };
 
     window.addEventListener("scroll", handleScroll);
-    handleScroll(); // initial
+    handleScroll();
 
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const renderAnimatedParagraph = (text, startOffset, range) => {
@@ -69,41 +66,54 @@ export default function About() {
   return (
     <section
       id="about"
-      ref={sectionRef}
-      className="flex items-center justify-center bg-cover bg-center relative"
+      ref={(node) => {
+        sectionRef.current = node;
+        if (typeof ref === "function") ref(node);
+        else if (ref) ref.current = node;
+      }}
+      className="flex items-center justify-center bg-cover bg-center relative z-10 min-h-screen p-5 text-white"
       style={{ backgroundImage: "url('/about-bg.svg')" }}
     >
-      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm z-0" />
-
-      <div className="relative z-10 w-full max-w-screen-xl mx-auto px-6 py-20 grid grid-cols-1 md:grid-cols-3 gap-12 text-white">
+      <div className="relative z-10 w-full max-w-screen-xl mx-auto px-6 py-20 grid grid-cols-1 md:grid-cols-3 gap-12">
         <div className="flex items-center justify-center md:justify-end">
           <div
-            className={`transition-all duration-700 transform ${
-              isVisible
-                ? "translate-x-0 opacity-100"
-                : "-translate-x-20 opacity-0"
-            }`}
+            className={`transition-all duration-700 transform ${isVisible ? "translate-x-0 opacity-100" : "-translate-x-20 opacity-0"
+              }`}
           >
-            <Image
-              src="/team.svg"
-              alt="IEEE SPS Team"
-              width={800}
-              height={800}
-              className="object-contain max-h-[400px]"
-              draggable={false}
-              priority
-              style={{
-                boxShadow: "25px 20px 15px rgb(225 216 216 / 30%)",
-              }}
-            />
+            {/* Optional animated image or element */}
           </div>
         </div>
 
-        <div className="md:col-span-2 text-xl leading-relaxed space-y-5">
-          <p>{renderAnimatedParagraph(para1, 0.0, 0.25)}</p>
-          <p>{renderAnimatedParagraph(para2, 0.25, 0.5)}</p>
+        <div className="md:col-span-2 text-lg leading-relaxed space-y-5">
+          <h2 className="text-4xl font-bold mb-4">About Us</h2>
+          <p>
+            The Signal Processing Society (SPS), founded in 1948 under IEEE, is
+            a leading global organization for signal processing professionals.
+          </p>
+          <p>
+            The IEEE SPS VIT Chapter at VIT University in Vellore actively works
+            towards connecting this global network with students, hosting
+            various events such as webinars, hands-on sessions, and hackathons.
+          </p>
+          <p>
+            Our flagship event, “HACKX,” launched in 2019 and was followed by
+            “HACKX 2.0” in 2023, successfully featuring distinguished speakers
+            and participants from top universities.
+          </p>
+          <p>
+            We are dedicated to fostering an environment where engineers can
+            explore key areas such as signal processing, IoT, and machine
+            learning, encouraging innovation and collaboration.
+          </p>
+
+          <div className="text-xl leading-relaxed space-y-5 pt-4">
+            <p>{renderAnimatedParagraph(para1, 0.0, 0.25)}</p>
+            <p>{renderAnimatedParagraph(para2, 0.25, 0.5)}</p>
+          </div>
         </div>
       </div>
     </section>
   );
-}
+});
+
+export default About;

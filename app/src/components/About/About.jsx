@@ -82,15 +82,11 @@ const About = forwardRef((props, ref) => {
               }`}>
             <Image
               src="/team.svg"
-              alt="IEEE SPS Team"
+              alt="About Us"
               width={400}
-              height={600}
-              className="object-contain max-h-[400px]"
-              draggable={false}
-              priority
-              style={{
-                boxShadow: "25px 20px 15px rgb(225 216 216 / 30%)",
-              }}
+              height={400}
+              className="w-full h-auto rounded-lg shadow-lg"
+              style={{ maxWidth: "100%", height: "auto" }}
             />
           </div>
         </div>

@@ -113,7 +113,7 @@ const TeamSection = () => {
         }
       `}</style>
 
-      <section id="team" className="z-10 py-16 px-4 sm:px-6 lg:px-8 bg-[url('/gradient-bg-light.svg')] bg-cover min-h-screen flex items-center justify-center">
+      <section id="team" className="z-10 py-16 px-4 sm:px-6 lg:px-8  bg-radial-[at_50%_15%] from-gray-200 via-50% via-gray-500 to-gray-900 to-90% bg-cover min-h-screen flex items-center justify-center">
         <div className="max-w-7xl mx-auto text-left w-full">
           <h2 className="text-4xl sm:text-7xl font-bold text-shadow-md text-black tracking-tight">Meet Our Team</h2>
 
@@ -121,16 +121,17 @@ const TeamSection = () => {
           <div ref={containerRef} className="flex overflow-x-auto gap-8 pb-6 px-2 horizontal-scroll-container scroll-smooth">
             {/* Team Member Card 1 */}
             {teamMembers.map((member, idx) => (
-
               <div key={idx} className="team-member-card relative transition-all duration-300">
-                <div className="relative top-65 z-10">
-                  <img className="" src={member.image} alt="" />
-                </div>
-                <div className="relative w-full bg-linear-to-t from-sky-100/25 to-blue-400/25 w-72 backdrop-blur-sm shadow-xl rounded-xl h-64 top-1 z-0" />
-                <div className="card-content z-20 relative bottom-8">
-                  <div className="bg-sky-300 rounded-2xl w-max px-12 py-2 mx-auto">
-                    <h3 className="text-xl font-semibold text-gray-900 mb-1">{member.name}</h3>
-                    <p className="text-indigo-700 text-sm font-medium">{member.designation}</p>
+                <div className="shadow-md overflow-hidden w-full h-100">
+                  <div className="relative top-65 z-10">
+                    <img className="" src={member.image} alt="" />
+                  </div>
+                  <div className="relative w-full bg-linear-to-t from-sky-100/25 to-blue-400/25 w-72 backdrop-blur-sm shadow-xl rounded-xl h-64 top-1 z-0" />
+                  <div className="card-content z-20 relative bottom-8">
+                    <div className="bg-sky-300 rounded-2xl w-max px-12 py-2 mx-auto">
+                      <h3 className="text-xl font-semibold text-gray-900 mb-1">{member.name}</h3>
+                      <p className="text-indigo-700 text-sm font-medium">{member.designation}</p>
+                    </div>
                   </div>
                 </div>
               </div>

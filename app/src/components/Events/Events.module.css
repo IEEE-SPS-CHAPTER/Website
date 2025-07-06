@@ -8,6 +8,7 @@
   perspective: 1200px;
   padding-top: 150px;
   margin-top: 80px;
+  scale: 120%; {/* might make the cards bigger in smaller screen  */}
 }
 
 .inner {
@@ -21,7 +22,7 @@
   width: var(--w);
   height: var(--h);
   top: 25%;
-  left: 50%;
+  left: 47%;
   transform: translateX(-50%);
   transform-style: preserve-3d;
   animation: rotating 20s linear infinite;

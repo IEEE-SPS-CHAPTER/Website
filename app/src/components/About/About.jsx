@@ -77,10 +77,20 @@ const About = forwardRef((props, ref) => {
       <div className="relative z-10 w-full max-w-screen-xl mx-auto px-6 py-20 grid grid-cols-1 md:grid-cols-3 gap-12">
         <div className="flex items-center justify-center md:justify-end">
           <div
-            className={`transition-all duration-700 transform ${isVisible ? "translate-x-0 opacity-100" : "-translate-x-20 opacity-0"
-              }`}
+            className={`transition-all duration-700 transform ${
+              isVisible
+                ? "translate-x-0 opacity-100"
+                : "-translate-x-20 opacity-0"
+            }`}
           >
-            {/* Optional animated image or element */}
+            <Image
+              src="/team.svg"
+              alt="About Us"
+              width={400}
+              height={400}
+              className="w-full h-auto rounded-lg shadow-lg"
+              style={{ maxWidth: "100%", height: "auto" }}
+            />
           </div>
         </div>
 

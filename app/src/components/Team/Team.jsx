@@ -111,9 +111,13 @@ const TeamSection = () => {
         .horizontal-scroll-container::-webkit-scrollbar-thumb:hover {
           background: #8b5cf6; /* Darker indigo on hover */
         }
+
+        .section-separator {
+          clip-path: polygon(0% 0%, 100% 0%, 100% 85%, 75% 100%, 25% 90%, 0% 100%);
+        }
       `}</style>
 
-      <section id="team" className="z-10 py-16 px-4 sm:px-6 lg:px-8  bg-radial-[at_50%_15%] from-gray-200 via-50% via-gray-500 to-gray-900 to-90% bg-cover min-h-screen flex items-center justify-center">
+      <section id="team" className="z-10 py-16 px-4 sm:px-6 lg:px-8  bg-radial-[at_50%_15%] from-gray-200 via-50% via-gray-500 to-gray-900 to-90% bg-cover min-h-screen flex items-center justify-center section-separator">
         <div className="max-w-7xl mx-auto text-left w-full">
           <h2 className="text-4xl sm:text-7xl font-bold text-shadow-md pb-20 text-black tracking-tight">Meet Our Team</h2>
 

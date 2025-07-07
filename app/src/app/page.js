@@ -37,10 +37,18 @@ export default function Home() {
       <About ref={aboutSectionRef} />
 
       {/* Other sections of your page */}
-      <BlogSection />
-      <EventsSection />
-      <TeamSection />
-      <ContactSection />
+      <div className="z-10">
+        <BlogSection />
+      </div>
+      <div className="z-30">
+        <EventsSection />
+      </div>
+      <div className="z-20 mt-[-160px]">
+        <TeamSection />
+      </div>
+      <div className="z-10 mt-[-160px]">
+        <ContactSection />
+      </div>
     </main>
   );
 }

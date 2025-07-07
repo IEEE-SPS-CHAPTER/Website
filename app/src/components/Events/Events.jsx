@@ -6,7 +6,7 @@ import events from "../../data/Events";
 
 const Events = () => {
   return (
-    <section id="events" className="bg-radial-[at_50%_55%] from-gray-700 via-gray-900 to-gray-950 to-100% bg-cover z-10 ">
+    <section id="events" className={`${styles["section-separator"]} bg-radial-[at_50%_55%] from-gray-700 via-gray-900 to-gray-950 to-100% bg-cover z-10 `}>
       <h2
         style={{
           fontFamily: "Inter",
@@ -48,7 +48,7 @@ const Events = () => {
           ))}
         </div>
       </div>
-    </section>
+    </section >
   );
 };
 

@@ -34,13 +34,15 @@ export default function Home() {
 
       {/* Your About Section - Pass the ref to it
           Ensure AboutClient.jsx is updated to use forwardRef and attach the ref to its root element. */}
-      <About ref={aboutSectionRef} />
+      <div className="z-20">
+        <About ref={aboutSectionRef} />
+      </div>
 
       {/* Other sections of your page */}
       <div className="z-10">
         <BlogSection />
       </div>
-      <div className="z-30">
+      <div className="z-10">
         <EventsSection />
       </div>
       <div className="z-20 mt-[-160px]">

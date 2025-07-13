@@ -1,9 +1,24 @@
 import Image from 'next/image';
 import React, { useEffect, useRef } from 'react';
 import teamMembers from '../../data/Team.js';
+import { motion, useInView } from 'framer-motion';
 
 // TeamSection component for displaying club members with a pop-in animation
 const TeamSection = () => {
+  const titleRef = useRef(null);
+  // useInView hook to detect if the element is in the viewport
+  // once: true means it will only trigger once when it enters the view
+  // amount: 0.5 means it triggers when 50% of the element is visible
+  const isInView = useInView(titleRef, { once: false, amount: 0.5 });
+
+  const titleText = "Welcome to My App with Framer Motion!"; // The title you want to animate
+
+  // Define animation variants for fade in and fade out
+  const variants = {
+    hidden: { opacity: 0, y: 80 }, // Initial state (hidden and slightly below)
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }, // Fade in state
+    exit: { opacity: 0, y: -80, transition: { duration: 0.6, ease: "easeIn" } }, // Fade out state
+  };
   // useRef to get a reference to the container of team member cards
   const containerRef = useRef(null);
 
@@ -112,14 +127,20 @@ const TeamSection = () => {
           background: #8b5cf6; /* Darker indigo on hover */
         }
 
-        .section-separator {
-          clip-path: polygon(0% 0%, 100% 0%, 100% 85%, 75% 100%, 25% 90%, 0% 100%);
-        }
       `}</style>
 
-      <section id="team" className="z-10 py-16 px-4 sm:px-6 lg:px-8  bg-radial-[at_50%_15%] from-gray-200 via-50% via-gray-500 to-gray-900 to-90% bg-cover min-h-screen flex items-center justify-center section-separator">
+      <section id="team" className="z-10 py-16 px-4 sm:px-6 lg:px-8  bg-radial-[at_50%_15%] from-gray-200 via-50% via-gray-500 to-gray-900 to-90% bg-cover min-h-screen flex items-center justify-center ">
         <div className="max-w-7xl mx-auto text-left w-full">
-          <h2 className="text-4xl sm:text-7xl font-bold text-shadow-md pb-20 text-black tracking-tight">Meet Our Team</h2>
+          <motion.h2
+            ref={titleRef}
+            className={"text-4xl sm:text-7xl font-bold text-shadow-md pb-20 text-black tracking-tigh"}
+            initial="hidden" // Start from the 'hidden' state
+            // Animate to 'visible' if isInView is true, otherwise to 'exit'
+            animate={isInView ? "visible" : "exit"}
+            variants={variants} // Apply the defined variants
+          >
+            Meet our Team
+          </motion.h2>
 
           {/* Horizontal Scroll Container */}
           <div ref={containerRef} className="flex overflow-x-auto gap-8 horizontal-scroll-container scroll-smooth">

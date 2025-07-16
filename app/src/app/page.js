@@ -42,13 +42,13 @@ export default function Home() {
       <div className="z-10">
         <BlogSection />
       </div>
-      <div className="z-10">
+      <div className="min-h-[900px] z-10">
         <EventsSection />
       </div>
-      <div className="z-20 mt-[-160px]">
+      <div className="z-20">
         <TeamSection />
       </div>
-      <div className="z-10 mt-[-160px]">
+      <div className="z-10">
         <ContactSection />
       </div>
     </main>

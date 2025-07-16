@@ -1,55 +1,81 @@
-"use client";
 
-import React from "react";
-import styles from "./Events.module.css";
-import events from "../../data/Events";
+// src/components/Events.jsx
+"use client"; // This is a Client Component, which means it can use hooks and event listeners.
+
+import React, { useEffect, useRef, useState } from 'react';
+import styles from './Events.module.css'; // Import the CSS Module
+import events from '../../data/Events.js';
 
 const Events = () => {
-  return (
-    <section id="events" className={` bg-radial-[at_50%_55%] from-gray-700 via-gray-900 to-gray-950 to-100% bg-cover z-10 `}>
-      <h2
-        style={{
-          fontFamily: "Inter",
-          fontWeight: 700,
-          lineHeight: "77px",
-          color: "#EAEBED",
-          background: "transparent",
-          textAlign: "left",
-          width: "100%",
-        }}
-        className="ml-[10%] md:ml-[20%] text-5xl md:text-7xl"
-      >
-        Events
-      </h2>
+  // useRef to get a direct reference to the carousel DOM element
+  const carouselRef = useRef(null);
+  // useState to manage the rotation angle of the carousel
+  const [angle, setAngle] = useState(0);
+  // useState to control whether the carousel auto-rotates
+  const [autoRotate, setAutoRotate] = useState(true);
 
-      <div className="absolute left-[-10%] top-850 ">
-        <svg width="596" height="650" viewBox="0 0 596 650" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path opacity="0.73" d="M321.892 23.3965C319.133 -5.56915 276.867 -5.56915 274.108 23.3965L269.674 69.958C267.299 94.8946 234.499 102.381 221.54 80.9443L197.343 40.918C182.289 16.0176 144.209 34.356 154.291 61.6504L170.498 105.525C179.177 129.023 152.875 149.998 131.898 136.308L92.7295 110.744C68.363 94.8413 42.0112 127.886 62.9375 148.103L96.5752 180.601C114.591 198.005 99.9942 228.315 75.1543 225.082L28.7734 219.045C-0.0801001 215.289 -9.48504 256.495 18.1406 265.63L62.5479 280.314C86.3307 288.179 86.3307 321.821 62.5479 329.686L18.1406 344.37C-9.48514 353.505 -0.0801345 394.711 28.7734 390.955L75.1543 384.918C99.9942 381.685 114.591 411.995 96.5752 429.399L62.9375 461.897C42.0111 482.114 68.3639 515.159 92.7305 499.256L131.898 473.692C152.875 460.002 179.177 480.977 170.498 504.475L154.291 548.35C144.209 575.644 182.289 593.982 197.343 569.082L221.541 529.056C234.501 507.619 267.299 515.106 269.674 540.042L274.108 586.604C276.867 615.569 319.133 615.569 321.892 586.604L326.326 540.042C328.701 515.105 361.501 507.619 374.46 529.056L398.657 569.082C413.711 593.982 451.791 575.644 441.709 548.35L425.502 504.475C416.823 480.977 443.125 460.002 464.102 473.692L503.271 499.256C527.637 515.159 553.989 482.114 533.062 461.897L499.425 429.399C481.409 411.995 496.006 381.685 520.846 384.918L567.227 390.955C596.08 394.711 605.485 353.505 577.859 344.37L533.452 329.686C509.669 321.821 509.669 288.179 533.452 280.314L577.859 265.63C605.485 256.495 596.08 215.289 567.227 219.045L520.846 225.082C496.006 228.315 481.409 198.005 499.425 180.601L533.062 148.103C553.989 127.886 527.637 94.8413 503.271 110.744L464.102 136.308C443.125 149.998 416.823 129.023 425.502 105.525L441.709 61.6504C451.791 34.356 413.711 16.0176 398.657 40.918L374.46 80.9443C361.501 102.381 328.701 94.8946 326.326 69.958L321.892 23.3965Z" stroke="white" strokeWidth="1" />
-        </svg>
-      </div>
-      <div className="absolute right-[-10%] top-950 ">
-        <svg width="596" height="596" viewBox="0 0 596 596" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path opacity="0.73" d="M321.892 23.3965C319.133 -5.56915 276.867 -5.56915 274.108 23.3965L269.674 69.958C267.299 94.8946 234.499 102.381 221.54 80.9443L197.343 40.918C182.289 16.0176 144.209 34.356 154.291 61.6504L170.498 105.525C179.177 129.023 152.875 149.998 131.898 136.308L92.7295 110.744C68.363 94.8413 42.0112 127.886 62.9375 148.103L96.5752 180.601C114.591 198.005 99.9942 228.315 75.1543 225.082L28.7734 219.045C-0.0801001 215.289 -9.48504 256.495 18.1406 265.63L62.5479 280.314C86.3307 288.179 86.3307 321.821 62.5479 329.686L18.1406 344.37C-9.48514 353.505 -0.0801345 394.711 28.7734 390.955L75.1543 384.918C99.9942 381.685 114.591 411.995 96.5752 429.399L62.9375 461.897C42.0111 482.114 68.3639 515.159 92.7305 499.256L131.898 473.692C152.875 460.002 179.177 480.977 170.498 504.475L154.291 548.35C144.209 575.644 182.289 593.982 197.343 569.082L221.541 529.056C234.501 507.619 267.299 515.106 269.674 540.042L274.108 586.604C276.867 615.569 319.133 615.569 321.892 586.604L326.326 540.042C328.701 515.105 361.501 507.619 374.46 529.056L398.657 569.082C413.711 593.982 451.791 575.644 441.709 548.35L425.502 504.475C416.823 480.977 443.125 460.002 464.102 473.692L503.271 499.256C527.637 515.159 553.989 482.114 533.062 461.897L499.425 429.399C481.409 411.995 496.006 381.685 520.846 384.918L567.227 390.955C596.08 394.711 605.485 353.505 577.859 344.37L533.452 329.686C509.669 321.821 509.669 288.179 533.452 280.314L577.859 265.63C605.485 256.495 596.08 215.289 567.227 219.045L520.846 225.082C496.006 228.315 481.409 198.005 499.425 180.601L533.062 148.103C553.989 127.886 527.637 94.8413 503.271 110.744L464.102 136.308C443.125 149.998 416.823 129.023 425.502 105.525L441.709 61.6504C451.791 34.356 413.711 16.0176 398.657 40.918L374.46 80.9443C361.501 102.381 328.701 94.8946 326.326 69.958L321.892 23.3965Z" stroke="white" strokeWidth="1" />
-        </svg>
-      </div>
-      <div className={styles.wrapper}>
-        <div className={styles.inner} style={{ "--quantity": events.length }}>
-          {events.map((card, i) => (
-            <div
-              key={i}
-              className={styles.card}
-              style={{
-                "--index": i,
-                "--color-card": card.color,
-              }}
-            >
-              <img src={card.src} alt={`Card ${i + 1}`} />
+  // useEffect hook to handle the auto-rotation interval
+  useEffect(() => {
+    let interval;
+    if (autoRotate) {
+      // Set up an interval to increment the angle every 30 milliseconds
+      interval = setInterval(() => {
+        setAngle(prevAngle => prevAngle + 1);
+      }, 30);
+    }
+
+    // Cleanup function: clear the interval when the component unmounts or autoRotate changes
+    return () => clearInterval(interval);
+  }, [autoRotate]); // Dependency array: re-run effect if autoRotate changes
+
+  // useEffect hook to apply the transform style based on the current angle
+  useEffect(() => {
+    if (carouselRef.current) {
+      carouselRef.current.style.transform = `rotateY(${angle}deg)`;
+    }
+  }, [angle]); // Dependency array: re-run effect if angle changes
+
+  // Event handler for when the mouse enters the carousel area
+  const handleMouseEnter = () => {
+    setAutoRotate(false); // Stop auto-rotation
+    if (carouselRef.current) {
+      // Pause the CSS animation
+      carouselRef.current.style.animationPlayState = 'paused';
+    }
+  };
+
+  // Event handler for when the mouse leaves the carousel area
+  const handleMouseLeave = () => {
+    setAutoRotate(true); // Resume auto-rotation
+    if (carouselRef.current) {
+      // Resume the CSS animation
+      carouselRef.current.style.animationPlayState = 'running';
+    }
+  };
+
+  return (
+    // The main container for the carousel, using CSS module classes
+    <section className={styles.sectionContainer}>
+      <h2 className="text-6xl md:text-6xl ml-[10%] font-black text-gray-200 mb-4 drop-shadow-lg">Events</h2>
+      <div className={styles.carouselContainer}>
+        {/* The carousel element, with ref for direct DOM manipulation and event handlers */}
+        <div
+          className={styles.carousel}
+          id="carousel" // Keeping the ID for consistency, though ref is preferred in React
+          ref={carouselRef}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
+          {/* Individual card elements within the carousel */}
+          {events.map((event, idx) => (
+            <div key={idx} className={styles.card}>
+              <img src={event.src} />
             </div>
           ))}
         </div>
       </div>
-    </section >
+    </section>
   );
 };
 
-export default Events;
+export default Events; // Export the component for use in other parts of the Next.js application

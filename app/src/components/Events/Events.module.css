@@ -17,7 +17,9 @@
 .carousel {
     width: 40%;
     height: 100%;
-    margin: 5em auto; 
+    margin: 0em auto; 
+    margin-top: 5em;
+    padding-top: 5em;
     transform-style: preserve-3d;
     animation: rotate 12s infinite linear;
     cursor: pointer;
@@ -25,8 +27,8 @@
 }
 .card {
     position: absolute;
-    width: 500px;
-    height: 550px;
+    width: 450px;
+    height: 500px;
     border-radius: 10px;
     display: flex;
     align-items: center;
@@ -40,23 +42,23 @@
 }
 .card:nth-child(1) {
     background: linear-gradient(145deg, #ff5f6d, #ffc371); 
-    transform: rotateY(0deg) translateZ(500px); 
+    transform: rotateY(0deg) translateZ(550px); 
 }
 .card:nth-child(2) {
     background: linear-gradient(145deg, #36d1dc, #5b86e5); 
-    transform: rotateY(60deg) translateZ(500px); 
+    transform: rotateY(60deg) translateZ(550px); 
 }
 .card:nth-child(3) {
     background: linear-gradient(145deg, #ff9966, #ff5e62); 
-    transform: rotateY(120deg) translateZ(500px); 
+    transform: rotateY(120deg) translateZ(550px); 
 }
 .card:nth-child(4) {
     background: linear-gradient(145deg, #00c6ff, #0072ff); 
-    transform: rotateY(180deg) translateZ(500px); 
+    transform: rotateY(180deg) translateZ(550px); 
 }
 .card:nth-child(5) {
     background: linear-gradient(145deg, #f7971e, #ffd200); 
-    transform: rotateY(240deg) translateZ(500px); 
+    transform: rotateY(240deg) translateZ(550px); 
 }
 .card:nth-child(6) {
     background: linear-gradient(145deg, #f7971e, #ffd200); 

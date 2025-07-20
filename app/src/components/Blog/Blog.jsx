@@ -11,7 +11,8 @@ const BlogCardCarousel = () => {
       author: "Sneha Prasad",
       date: "Mar 23, 2025",
       content: "Digital Signal Processing (DSP) uses digital systems to analyze and manipulate signals for communication, radar, and data analysis. It filters, modulates, and compresses signals with high accuracy. From aircraft noise reduction to ocean tracking via radar altimeters, DSP plays a key role in modern electronic and satellite systems.",
-      category: "Technology"
+      category: "Technology",
+      link: "https://medium.com/@vitieeesps/digital-signal-processing-in-ocean-and-space-technology-987b08ad1b7c"
     },
     {
       id: 2,
@@ -20,7 +21,8 @@ const BlogCardCarousel = () => {
       author: "Sanskar Arora",
       date: "Jan 23, 2022",
       content: "Electric propulsion uses electricity to accelerate propellants at high speeds, reducing fuel needs and launch costs for space missions. With types like ion and Hall thrusters, it offers high efficiency and specific impulse, making it ideal for deep space travel. This article explores its principles, types, and applications.",
-      category: "Mechanics"
+      category: "Mechanics",
+      link: "https://medium.com/ieee-signal-processing-society-vit/electric-propulsion-ae0e02080591"
     },
     {
       id: 3,
@@ -29,7 +31,8 @@ const BlogCardCarousel = () => {
       author: "Anusha Ghose",
       date: "April 1, 2025",
       content: "Modern chips, smaller than a red blood cell, power today’s devices by packing billions of transistors into tiny spaces. With innovations like 3D structures and chiplet architecture, manufacturers overcome physical limits to boost performance. This article explores chip miniaturization, challenges, and future advancements in semiconductor technology.",
-      category: "Electronics"
+      category: "Electronics",
+      link: "https://medium.com/@vitieeesps/chip-manufacturing-a-dive-into-one-of-humanitys-greatest-scientific-feats-c617b872600d"
     },
     {
       id: 4,
@@ -38,7 +41,8 @@ const BlogCardCarousel = () => {
       author: "Akshita",
       date: "Jul 21, 2024",
       content: "5G mmWave is a high-frequency band in 5G offering ultra-fast data speeds, low latency, and massive capacity. Ideal for urban areas, AR/VR, and IoT, it enables next-gen connectivity. This article explores its features, benefits, challenges, and applications across industries like healthcare, automation, and emergency response systems.",
-      category: "Security"
+      category: "Security",
+      link: "https://medium.com/@vitieeesps/the-potential-of-5g-millimeter-wave-technology-35d5e0874440"
     },
     {
       id: 5,
@@ -47,7 +51,8 @@ const BlogCardCarousel = () => {
       author: "Ananya Ghosh",
       date: "Jun 21, 2022",
       content: "The Internet of Things (IoT) connects everyday devices to the internet, enabling smart automation and remote control. From managing home appliances to improving healthcare and agriculture, IoT simplifies life. This article explores IoT’s architecture, applications, challenges, security concerns, and future scope, highlighting its growing impact across various industries.",
-      category: "IoT"
+      category: "IoT",
+      link: "https://medium.com/ieee-signal-processing-society-vit/future-scope-of-iot-61981da29a91"
     }
   ];
 
@@ -150,6 +155,10 @@ const BlogCardCarousel = () => {
 
               <div className="text-lg leading-relaxed text-gray-700 text-justify">
                 {post.content}
+              </div>
+
+              <div className="text-lg bg-gray-500 p-3 font-semibold min-w rounded-3xl cursor-pointer transistion-all duration-200 hover:scale-110 hover:shadow-2xl shadow-lg z-40 absolute bottom-10">
+                <a href={post.link}>Read more</a>
               </div>
 
               {/* Navigation Arrow */}

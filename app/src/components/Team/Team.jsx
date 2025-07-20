@@ -1,88 +1,95 @@
-import Image from 'next/image';
-import React, { useEffect, useRef } from 'react';
-import teamMembers from '../../data/Team.js';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
+import teamMembers from '../../data/Team.js';
 
 // TeamSection component for displaying club members with a pop-in animation
-const TeamSection = () => {
+const App = () => {
   const titleRef = useRef(null);
   // useInView hook to detect if the element is in the viewport
-  // once: true means it will only trigger once when it enters the view
-  // amount: 0.5 means it triggers when 50% of the element is visible
   const isInView = useInView(titleRef, { once: false, amount: 0.5 });
-
   const titleText = "Welcome to My App with Framer Motion!"; // The title you want to animate
 
-  // Define animation variants for fade in and fade out
+  // Define animation variants for the title
   const variants = {
-    hidden: { opacity: 0, y: 80 }, // Initial state (hidden and slightly below)
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }, // Fade in state
-    exit: { opacity: 0, y: -80, transition: { duration: 0.6, ease: "easeIn" } }, // Fade out state
+    hidden: { opacity: 0, y: 80 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+    exit: { opacity: 0, y: -80, transition: { duration: 0.6, ease: "easeIn" } },
   };
+
   // useRef to get a reference to the container of team member cards
   const containerRef = useRef(null);
 
+  // This useEffect handles the pop-in animation for each card as it scrolls into view.
   useEffect(() => {
     // Ensure the DOM is loaded and the container reference exists
     if (!containerRef.current) return;
 
-    // Select all team member cards within the container
-    const teamMemberCards = containerRef.current.querySelectorAll('.team-member-card');
+    // We need to query for the cards after they have been rendered.
+    // A small timeout ensures the DOM is ready for querying.
+    const timer = setTimeout(() => {
+      const teamMemberCards = containerRef.current.querySelectorAll('.team-member-card');
 
-    // Options for the Intersection Observer
-    const observerOptions = {
-      root: null, // Use the viewport as the root
-      rootMargin: '0px', // No margin around the root
-      threshold: 0.1 // Trigger when 10% of the item is visible
-    };
+      if (teamMemberCards.length === 0) return;
 
-    // Callback function for the Intersection Observer
-    const observerCallback = (entries, observer) => {
-      entries.forEach(entry => {
-        // If the card is intersecting (visible)
-        if (entry.isIntersecting) {
-          // Add the animation class to trigger the pop-in effect
-          entry.target.classList.add('animate-pop-in');
-          // Stop observing the card once it has animated
-          observer.unobserve(entry.target);
-        }
-      });
-    };
+      const observerOptions = {
+        root: null, // Use the viewport as the root
+        rootMargin: '0px',
+        threshold: 0.1 // Trigger when 10% of the item is visible
+      };
 
-    // Create a new Intersection Observer instance
-    const observer = new IntersectionObserver(observerCallback, observerOptions);
+      const observerCallback = (entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-pop-in');
+            observer.unobserve(entry.target);
+          }
+        });
+      };
 
-    // Observe each team member card to detect when it enters the viewport
-    teamMemberCards.forEach(card => {
-      observer.observe(card);
-    });
+      const observer = new IntersectionObserver(observerCallback, observerOptions);
+      teamMemberCards.forEach(card => observer.observe(card));
 
-    // Cleanup function: Disconnect the observer when the component unmounts
-    return () => {
-      teamMemberCards.forEach(card => {
-        observer.unobserve(card);
-      });
-      observer.disconnect();
-    };
+      // Cleanup function: Disconnect the observer when the component unmounts
+      return () => {
+        teamMemberCards.forEach(card => {
+          if (card) observer.unobserve(card);
+        });
+        observer.disconnect();
+      };
+    }, 100); // 100ms delay
+
+    return () => clearTimeout(timer);
+
   }, []); // Empty dependency array ensures this effect runs only once after initial render
+
+  /**
+   * Handles scrolling the carousel left or right.
+   * @param {'left' | 'right'} direction - The direction to scroll.
+   */
+  const handleScroll = (direction) => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    // Calculate the amount to scroll. We'll scroll by 80% of the container's visible width.
+    const scrollAmount = container.clientWidth * 0.8;
+
+    container.scrollBy({
+      left: direction === 'left' ? -scrollAmount : scrollAmount,
+      behavior: 'smooth' // This enables the smooth scrolling animation
+    });
+  };
 
   return (
     <>
-      {/* Tailwind CSS CDN (for demonstration purposes in a standalone immersive) */}
-      {/* In a real Next.js project, Tailwind would be configured and imported differently */}
-      <script src="https://cdn.tailwindcss.com"></script>
-      {/* Google Fonts - Inter */}
-      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-
       {/* Custom CSS for animations and scrollbar styling */}
-      {/* In a real Next.js project, this would typically be in a global CSS file or a CSS module */}
       <style>{`
+        /* Using Inter font from Google Fonts */
         body {
           font-family: 'Inter', sans-serif;
-          background-color: #f8fafc; /* Light blue-gray background */
+          background-color: #f8fafc;
         }
 
-        /* Custom pop-in animation */
+        /* Custom pop-in animation for cards */
         @keyframes popIn {
           0% {
             opacity: 0;
@@ -99,65 +106,113 @@ const TeamSection = () => {
           animation: popIn 0.6s ease-out forwards;
         }
 
-        /* Initial state before animation */
+        /* Initial state of cards before animation */
         .team-member-card {
-          opacity: 0; /* Hidden by default */
-          transform: scale(0.8) translateY(20px); /* Slightly smaller and lower */
-          transition: opacity 0.3s ease-out, transform 0.3s ease-out; /* Smooth transition for initial load (though JS handles visibility) */
+          opacity: 0;
+          transform: scale(0.8) translateY(20px);
           flex-shrink: 0; /* Prevent cards from shrinking */
-          width: 300px; /* Fixed width for cards in horizontal scroll */
+          width: 300px; /* Fixed width for cards */
         }
 
-        /* Custom scrollbar styling for Webkit browsers (Chrome, Safari) */
+        /* Custom scrollbar for Webkit browsers (Chrome, Safari) */
         .horizontal-scroll-container::-webkit-scrollbar {
           height: 8px;
         }
-
         .horizontal-scroll-container::-webkit-scrollbar-track {
-          background: #e2e8f0; /* Light gray track */
+          background: #e2e8f0;
           border-radius: 10px;
         }
-
         .horizontal-scroll-container::-webkit-scrollbar-thumb {
-          background: #a78bfa; /* Indigo thumb */
+          background: #a78bfa;
           border-radius: 10px;
         }
-
         .horizontal-scroll-container::-webkit-scrollbar-thumb:hover {
-          background: #8b5cf6; /* Darker indigo on hover */
+          background: #8b5cf6;
         }
-
+        
+        /* General styling for nav buttons */
+        .nav-button {
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(4px); /* Frosted glass effect */
+            border-radius: 9999px; /* Circular shape */
+            padding: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: absolute; /* Positioned relative to the carousel wrapper */
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+        }
+        .nav-button:hover {
+            background-color: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+        .nav-button.left {
+            left: 1rem;
+        }
+        .nav-button.right {
+            right: 1rem;
+        }
       `}</style>
 
-      <section id="team" className="z-10 py-16 px-4 sm:px-6 lg:px-8  bg-radial-[at_50%_15%] from-gray-200 via-50% via-gray-500 to-gray-900 to-90% bg-cover min-h-screen flex items-center justify-center ">
+      <section id="team" className="py-16 px-4 sm:px-6 lg:px-8 bg-radial-[at_50%_75%] from-sky-200 via-blue-400 to-indigo-900 to-90% min-h-screen flex items-center justify-center">
         <div className="max-w-7xl mx-auto text-left w-full">
           <motion.h2
             ref={titleRef}
-            className={"text-4xl sm:text-7xl font-bold text-shadow-md pb-20 text-black tracking-tigh"}
-            initial="hidden" // Start from the 'hidden' state
-            // Animate to 'visible' if isInView is true, otherwise to 'exit'
+            className="text-4xl sm:text-7xl font-bold text-gray-800 pb-12 tracking-tight"
+            initial="hidden"
             animate={isInView ? "visible" : "exit"}
-            variants={variants} // Apply the defined variants
+            variants={variants}
           >
-            Meet our Team
+            Meet Our Team
           </motion.h2>
 
-          {/* Horizontal Scroll Container */}
-          <div ref={containerRef} className="flex overflow-x-auto gap-8 horizontal-scroll-container scroll-smooth">
-            {/* Team Member Card 1 */}
-            {teamMembers.map((member, idx) => (
-              <div key={idx} className="team-member-card relative transition-all duration-300">
-                <div className="shadow-2xl z-10">
-                  <img className="z-10" src={member.image} alt="" />
-                </div>
-                <div className="card-content z-20 relative bottom-10">
-                  <div className="bg-sky-300 rounded-2xl w-max px-12 py-2 mx-auto">
-                    <h3 className="text-xl font-semibold text-gray-900 mb-1">{member.name}</h3>
-                    <p className="text-indigo-700 text-sm font-medium">{member.designation}</p>
+          {/* Wrapper for the carousel and navigation buttons */}
+          <div className="relative">
+            {/* Left Navigation Button */}
+            <button
+              onClick={() => handleScroll('left')}
+              className="nav-button left"
+              aria-label="Scroll left"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6 text-gray-700">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+              </svg>
+            </button>
+
+            {/* Horizontal Scroll Container */}
+            <div
+              ref={containerRef}
+              className="flex overflow-x-auto gap-8 horizontal-scroll-container scroll-smooth p-4"
+            >
+              {teamMembers.map((member, idx) => (
+                <div key={idx} className="team-member-card">
+                  <div className="shadow-xl rounded-2xl overflow-hidden">
+                    {/* Replaced Next/Image with standard img tag for compatibility */}
+                    <img className="w-full h-auto object-cover" src={member.image} alt={`Photo of ${member.name}`} onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/300x400/cccccc/ffffff?text=Image+Not+Found'; }} />
+                    <div className="p-6 text-center bg-linear-to-r from-blue-500 via-cyan-500 to-teal-500">
+                      <h3 className="text-2xl font-semibold text-gray-100 mb-1">{member.name}</h3>
+                      <p className="text-indigo-100 text-md font-medium">{member.designation}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+
+            {/* Right Navigation Button */}
+            <button
+              onClick={() => handleScroll('right')}
+              className="nav-button right"
+              aria-label="Scroll right"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6 text-gray-700">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+              </svg>
+            </button>
           </div>
         </div>
       </section >
@@ -165,4 +220,4 @@ const TeamSection = () => {
   );
 };
 
-export default TeamSection;
+export default App;

@@ -82,7 +82,7 @@ const About = forwardRef((props, ref) => {
           >
             <div className="transform -translate-y-2 hover:scale-102 transition-transform duration-700 ease-in-out">
               <Image
-                src="/team.svg"
+                src="/team.webp"
                 width={300}
                 height={300}
                 alt="About Us"

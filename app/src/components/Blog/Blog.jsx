@@ -105,7 +105,7 @@ const BlogCardCarousel = () => {
   );
 
   return (
-    <section className="w-full min-h-screen bg-white  flex items-center justify-center p-5 overflow-hidden z-10">
+    <div className="w-full min-h-screen bg-white rounded-md flex items-center justify-center p-5 overflow-hidden ">
       <div className="max-w-6xl w-full relative">
         {/* Header */}
         <div className="text-left mb-16 relative">
@@ -207,7 +207,7 @@ const BlogCardCarousel = () => {
           }
         }
       `}</style>
-    </section>
+    </div>
   );
 };
 

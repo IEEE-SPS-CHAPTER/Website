@@ -8,7 +8,7 @@ import React, { forwardRef } from "react"; // Import forwardRef
 // Wrap the Hero component with forwardRef
 const Hero = forwardRef((props, ref) => {
   return (
-    <section
+    <div
       id="hero"
       ref={ref} // Attach the forwarded ref to the section element
       className="relative flex items-center justify-center px-8 overflow-hidden min-h-screen z-10"
@@ -35,7 +35,7 @@ const Hero = forwardRef((props, ref) => {
       </div>
       {/* The original Image component for hero-bg.svg is commented out here,
           as ScrollBlurBackground will handle the main fixed background. */}
-    </section>
+    </div>
   );
 });
 

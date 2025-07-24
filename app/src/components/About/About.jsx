@@ -63,19 +63,19 @@ const About = forwardRef((props, ref) => {
 
   return (
 
-    <section
+    <div
       id="about"
       ref={(node) => {
         sectionRef.current = node;
         if (typeof ref === "function") ref(node);
         else if (ref) ref.current = node;
       }}
-      className="flex items-center justify-center bg-cover bg-center relative z-10 min-h-screen p-5 text-white bg-[url('/background.jpg')]"
+      className="w-full max-w-screen-xl flex items-center justify-center bg-cover bg-center relative z-10 min-h-screen p-5 text-white bg-[url('/background.jpg')]"
     >
-      <div className="relative z-10 w-full max-w-screen-xl mx-auto px-6 py-7 grid grid-cols-1 md:grid-cols-2 gap-12 bg-white/3 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/20">
+      <div className="relative mx-auto px-6 py-7 grid grid-cols-1 md:grid-cols-2 gap-12 bg-white/3 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/20">
 
         {/* Image Section - transition preserved */}
-        <div className="flex items-center justify-center md:col-span-1 md:justify-end">
+        <div className="flex items-center justify-center md:col-span-1">
           <div
             className={`transition-all duration-1000 transform ${isVisible ? "translate-x-0 opacity-100" : "-translate-x-80 opacity-0"
               }`}
@@ -83,8 +83,8 @@ const About = forwardRef((props, ref) => {
             <div className="transform -translate-y-2 hover:scale-102 transition-transform duration-700 ease-in-out">
               <Image
                 src="/team.webp"
-                width={300}
-                height={300}
+                width={400}
+                height={400}
                 alt="About Us"
                 className="w-full h-auto rounded-3xl shadow-xl transition-transform duration-500 hover:scale-105"
               />
@@ -114,7 +114,7 @@ const About = forwardRef((props, ref) => {
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 });
 

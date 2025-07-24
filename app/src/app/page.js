@@ -18,38 +18,28 @@ export default function Home() {
   // const teamSectionRef = useRef(null);
 
   return (
-    <main className="font-inter overflow-x-hidden scroll-smooth">
-      {/* The ScrollBlurBackground component manages the global fixed background.
-          It must be rendered at the top of the main content to be behind other sections. */}
+    <main className="flex flex-col gap-0 font-inter overflow-x-hidden scroll-smooth">
       <ScrollBlurBackground
         aboutSectionRef={aboutSectionRef}
-      // If you had a team section and wanted the background to scroll away, you'd pass:
-      // teamSectionRef={teamSectionRef}
       />
-
-      {/* Your Hero Section */}
-      {/* Hero component likely doesn't need a ref for the current blur logic,
-          but it's good practice to ensure it's z-10 or higher. */}
       <Hero />
-
-      {/* Your About Section - Pass the ref to it
-          Ensure AboutClient.jsx is updated to use forwardRef and attach the ref to its root element. */}
-      <div className="z-20">
-        <About ref={aboutSectionRef} />
-      </div>
-
-      {/* Other sections of your page */}
-      <div className="z-10">
-        <BlogSection />
-      </div>
-      <div className="min-h-[900px] z-10">
-        <EventsSection />
-      </div>
-      <div className="z-20">
-        <TeamSection />
-      </div>
-      <div className="z-10">
-        <ContactSection />
+      <div className="z-30">
+        <div>
+          <About ref={aboutSectionRef} />
+        </div>
+        <section>
+          <BlogSection />
+        </section>
+        {/* 
+        <section>
+          <EventsSection />
+        </section>*/}
+        <section>
+          <TeamSection />
+        </section>
+        <section >
+          <ContactSection />
+        </section>
       </div>
     </main>
   );

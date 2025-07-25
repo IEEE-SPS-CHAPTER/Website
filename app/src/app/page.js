@@ -5,7 +5,7 @@ import Hero from "../components/Hero/Hero";
 import ScrollBlurBackground from "../components/ScrollBlurBackground";
 import About from "../components/About/About"; // Ensure this component uses forwardRef
 import BlogSection from "../components/BlogClient";
-import EventsSection from "../components/EventsClient";
+// import EventsSection from "../components/EventsClient";
 import TeamSection from "../components/TeamClient"; // Ensure this component uses forwardRef if needed for future logic
 import ContactSection from "../components/ContactClient";
 
@@ -18,18 +18,18 @@ export default function Home() {
   // const teamSectionRef = useRef(null);
 
   return (
-    <main className="flex flex-col gap-0 font-inter overflow-x-hidden scroll-smooth">
+    <main className="font-inter overflow-x-hidden scroll-smooth">
       <ScrollBlurBackground
         aboutSectionRef={aboutSectionRef}
       />
       <Hero />
-      <div className="z-30">
-        <div>
+      <div className="flex flex-col z-30 w-[100vw]">
+        <div className="mx-auto">
           <About ref={aboutSectionRef} />
         </div>
-        <section>
+        <div className="">
           <BlogSection />
-        </section>
+        </div>
         {/* 
         <section>
           <EventsSection />

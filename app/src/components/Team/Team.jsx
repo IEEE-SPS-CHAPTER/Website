@@ -159,7 +159,7 @@ const App = () => {
         }
       `}</style>
 
-      <div id="team" className="py-16 px-4 sm:px-6 lg:px-8 bg-radial-[at_50%_75%] from-sky-200 via-blue-400 to-indigo-900 to-90% min-h-screen flex items-center justify-center">
+      <section id="team" className="py-16 px-4 sm:px-6 lg:px-8 bg-radial-[at_50%_75%] from-sky-200 via-blue-400 to-indigo-900 to-90% min-h-screen flex items-center justify-center">
         <div className="max-w-7xl mx-auto text-left w-full">
           <motion.h2
             ref={titleRef}
@@ -215,7 +215,7 @@ const App = () => {
             </button>
           </div>
         </div>
-      </div>
+      </section>
     </>
   );
 };

@@ -63,7 +63,7 @@ const About = forwardRef((props, ref) => {
 
   return (
 
-    <div
+    <section
       id="about"
       ref={(node) => {
         sectionRef.current = node;
@@ -114,7 +114,7 @@ const About = forwardRef((props, ref) => {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 });
 

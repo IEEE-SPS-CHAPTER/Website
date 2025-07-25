@@ -55,7 +55,7 @@ const Events = () => {
 
   return (
     // The main container for the carousel, using CSS module classes
-    <div className="{styles.sectionContainer} bg-radial-[at_50%_55%] from-gray-700 via-gray-900 to-gray-950 to-100% bg-cover">
+    <section className="{styles.sectionContainer} bg-radial-[at_50%_55%] from-gray-700 via-gray-900 to-gray-950 to-100% bg-cover">
       <h2 className="text-6xl md:text-6xl ml-[10%] font-black text-gray-200 mb-4 drop-shadow-lg">Events</h2>
       <div className={styles.carouselContainer}>
         {/* The carousel element, with ref for direct DOM manipulation and event handlers */}
@@ -74,7 +74,7 @@ const Events = () => {
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

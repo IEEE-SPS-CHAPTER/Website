@@ -10,7 +10,7 @@ import Link from "next/link";
 
 const Contact = () => {
   return (
-    <div
+    <section
       id="contact"
       className="flex flex-col md:flex-row bg-gradient-to-tr from-black via-[#020402] to-[#015C91] text-white font-sans text-lg md:text-xl z-10"
     >
@@ -92,7 +92,7 @@ const Contact = () => {
           draggable="false"
         />
       </div>
-    </div>
+    </section>
   );
 };
 

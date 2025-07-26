@@ -105,8 +105,8 @@ const BlogCardCarousel = () => {
   );
 
   return (
-    <section className="bg-white rounded-sm flex items-center justify-center p-5 overflow-hidden ">
-      <div className="w-[375px] max-w-6xl w-full relative">
+    <section className="min-h-screen bg-white rounded-sm flex items-center justify-center p-5 overflow-hidden ">
+      <div className="max-w-6xl w-full relative">
         {/* Header */}
         <div className="text-left mb-16 relative">
           <h1 className="text-5xl md:text-6xl font-black text-gray-800 mb-4 drop-shadow-lg">

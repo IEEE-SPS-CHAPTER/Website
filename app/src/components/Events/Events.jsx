@@ -1,81 +1,101 @@
 
-// src/components/Events.jsx
-"use client"; // This is a Client Component, which means it can use hooks and event listeners.
+'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
-import styles from './Events.module.css'; // Import the CSS Module
-import events from '../../data/Events.js';
+import React, { useRef } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
+import events from '../../data/Events';
 
-const Events = () => {
-  // useRef to get a direct reference to the carousel DOM element
-  const carouselRef = useRef(null);
-  // useState to manage the rotation angle of the carousel
-  const [angle, setAngle] = useState(0);
-  // useState to control whether the carousel auto-rotates
-  const [autoRotate, setAutoRotate] = useState(true);
+// We must register the plugin to use it
+gsap.registerPlugin(ScrollTrigger);
 
-  // useEffect hook to handle the auto-rotation interval
-  useEffect(() => {
-    let interval;
-    if (autoRotate) {
-      // Set up an interval to increment the angle every 30 milliseconds
-      interval = setInterval(() => {
-        setAngle(prevAngle => prevAngle + 1);
-      }, 30);
-    }
+// --- The Animated Horizontal Scroll Component ---
+export default function EventSection() {
+  const mainRef = useRef(null);
+  const trackRef = useRef(null);
 
-    // Cleanup function: clear the interval when the component unmounts or autoRotate changes
-    return () => clearInterval(interval);
-  }, [autoRotate]); // Dependency array: re-run effect if autoRotate changes
+  useGSAP(() => {
+    const track = trackRef.current;
+    const cards = gsap.utils.toArray(".card-item");
 
-  // useEffect hook to apply the transform style based on the current angle
-  useEffect(() => {
-    if (carouselRef.current) {
-      carouselRef.current.style.transform = `rotateY(${angle}deg)`;
-    }
-  }, [angle]); // Dependency array: re-run effect if angle changes
+    // Calculate the total width of the track that needs to be scrolled.
+    // This is the full scrollable width minus the width of the viewport.
+    const scrollWidth = track.scrollWidth - window.innerWidth;
 
-  // Event handler for when the mouse enters the carousel area
-  const handleMouseEnter = () => {
-    setAutoRotate(false); // Stop auto-rotation
-    if (carouselRef.current) {
-      // Pause the CSS animation
-      carouselRef.current.style.animationPlayState = 'paused';
-    }
-  };
+    // Create the main horizontal scroll animation.
+    // This tween moves the track to the left based on the user's vertical scroll.
+    const horizontalScroll = gsap.to(track, {
+      x: -scrollWidth,
+      ease: "none",
+      scrollTrigger: {
+        trigger: mainRef.current,
+        pin: true,
+        scrub: 1,
+        // The animation ends when the track has scrolled its full width.
+        end: () => `+=${scrollWidth}`,
+        invalidateOnRefresh: true // Recalculate on window resize
+      }
+    });
 
-  // Event handler for when the mouse leaves the carousel area
-  const handleMouseLeave = () => {
-    setAutoRotate(true); // Resume auto-rotation
-    if (carouselRef.current) {
-      // Resume the CSS animation
-      carouselRef.current.style.animationPlayState = 'running';
-    }
-  };
+    // Add individual animations to each card to make them pop.
+    cards.forEach((card) => {
+      // Animate cards to fade and scale down as they move away from the center.
+      gsap.to(card, {
+        scale: 0.9,
+        opacity: 0.7,
+        scrollTrigger: {
+          trigger: card,
+          containerAnimation: horizontalScroll,
+          start: "center right",
+          end: "center left",
+          scrub: true,
+        }
+      });
+
+      // Animate cards to full size and opacity when they are in the center.
+      gsap.to(card, {
+        scale: 1,
+        opacity: 1,
+        scrollTrigger: {
+          trigger: card,
+          containerAnimation: horizontalScroll,
+          start: "center center+=200",
+          end: "center center-=100",
+          scrub: true,
+        }
+      });
+    });
+
+  }, { scope: mainRef });
 
   return (
-    // The main container for the carousel, using CSS module classes
-    <section className="{styles.sectionContainer} bg-radial-[at_50%_55%] from-gray-700 via-gray-900 to-gray-950 to-100% bg-cover">
-      <h2 className="text-6xl md:text-6xl ml-[10%] font-black text-gray-200 mb-4 drop-shadow-lg">Events</h2>
-      <div className={styles.carouselContainer}>
-        {/* The carousel element, with ref for direct DOM manipulation and event handlers */}
-        <div
-          className={styles.carousel}
-          id="carousel" // Keeping the ID for consistency, though ref is preferred in React
-          ref={carouselRef}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-        >
-          {/* Individual card elements within the carousel */}
+    <>
+      <div className="">
+      </div>
+
+      <section ref={mainRef} className="h-screen w-full overflow-hidden bg-gray-900">
+        <div ref={trackRef} className="h-full flex items-center gap-8 px-8">
+          {/* Add a starting title card */}
+          <div className="flex-shrink-0 w-[50vw] text-white pr-12">
+            <h2 className="text-6xl font-bold">Our Events</h2>
+          </div>
           {events.map((event, idx) => (
-            <div key={idx} className={styles.card}>
-              <img src={event.src} />
+            <div key={idx} className="card-item flex-shrink-0 w-[300px] h-[400px] md:w-[400px] md:h-[550px]">
+              <img
+                src={event.src}
+                className="w-full h-full object-cover rounded-2xl"
+                alt={event.title}
+              />
             </div>
           ))}
+          {/* Add a blank spacer at the end for better visual completion */}
+          <div className="flex-shrink-0 w-[50vw]"></div>
         </div>
-      </div>
-    </section>
-  );
-};
+      </section>
 
-export default Events; // Export the component for use in other parts of the Next.js application
+      <div className="">
+      </div>
+    </>
+  );
+}

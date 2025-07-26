@@ -5,7 +5,7 @@ import Hero from "../components/Hero/Hero";
 import ScrollBlurBackground from "../components/ScrollBlurBackground";
 import About from "../components/About/About"; // Ensure this component uses forwardRef
 import BlogSection from "../components/BlogClient";
-// import EventsSection from "../components/EventsClient";
+import EventsSection from "../components/Events/Events";
 import TeamSection from "../components/TeamClient"; // Ensure this component uses forwardRef if needed for future logic
 import ContactSection from "../components/ContactClient";
 
@@ -30,10 +30,9 @@ export default function Home() {
         <div className="">
           <BlogSection />
         </div>
-        {/* 
         <section>
           <EventsSection />
-        </section>*/}
+        </section>
         <section>
           <TeamSection />
         </section>

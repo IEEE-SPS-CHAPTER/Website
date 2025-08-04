@@ -73,7 +73,7 @@ export default function Marquee() {
   };
   return (
     <div
-      className=" relative w-screen mt-8 py-4 bg-green-600 text-gray-200 flex overflow-hidden items-center"
+      className=" relative w-screen py-4 bg-green-600 text-gray-200 flex overflow-hidden items-center"
       style={{ minHeight: "110px" }}
     >
       {renderMarqueeElements()}

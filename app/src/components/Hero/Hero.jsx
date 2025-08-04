@@ -4,9 +4,34 @@ import Image from "next/image";
 import CheckBlog from "./CheckBlog/CheckBlog";
 import HeroGlobe from "./HeroGlobe/HeroGlobe";
 import React, { forwardRef } from "react"; // Import forwardRef
+import { gsap } from "gsap";
+import { useGSAP } from "@gsap/react";
+import { SplitText } from "gsap/SplitText";
+
+gsap.registerPlugin(SplitText);
 
 // Wrap the Hero component with forwardRef
 const Hero = forwardRef((props, ref) => {
+
+  useGSAP(() => {
+    SplitText.create(".title", {
+      type: "lines, words",
+      mask: "lines",
+      autoSplit: true,
+      onSplit(self) {
+        return gsap.from(self.words, {
+          duration: 2,
+          y: 100,
+          ease: "power4.in",
+          autoAlpha: 0,
+          stagger: 0.05
+        });
+      }
+    });
+
+
+  });
+
   return (
     <div
       id="hero"
@@ -20,10 +45,12 @@ const Hero = forwardRef((props, ref) => {
 
           {/* Left side - Text content */}
           <div className="flex-1 order-2 lg:order-1 text-center lg:text-left sm:ml-2">
-            <div className="font-black text-left text-7xl sm:text-7xl md:text-8xl py-4">
+            <div className="title font-black text-left text-7xl sm:text-7xl md:text-8xl py-4">
               <h1> WE ARE <span className="italic block">IEEE SPS</span> </h1>
             </div>
-            <CheckBlog />
+            <div className="check-button">
+              <CheckBlog />
+            </div>
           </div>
 
           {/* Right side - 3D Globe */}
@@ -33,8 +60,6 @@ const Hero = forwardRef((props, ref) => {
 
         </div>
       </div>
-      {/* The original Image component for hero-bg.svg is commented out here,
-          as ScrollBlurBackground will handle the main fixed background. */}
     </div>
   );
 });

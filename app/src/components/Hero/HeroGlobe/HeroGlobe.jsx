@@ -77,7 +77,7 @@ export default function HeroGlobe() {
         <GlobeModel scale={0.8} />
         <DumpSceneGraph />
         <Rotator />
-        <Environment preset="sunset" />
+        <Environment files="/venice_sunset_1k.hdr" backgroundpreset="sunset" />
       </Canvas>
     </div>
   );

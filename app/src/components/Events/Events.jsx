@@ -1,101 +1,70 @@
 
-'use client';
+"use client";
+import React, { useRef, useLayoutEffect } from "react";
+import styles from "./Events.module.css";
+import Image from "next/image";
+import events from "../../data/Events.js";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 
-import React, { useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
-import { useGSAP } from '@gsap/react';
-import events from '../../data/Events';
-
-// We must register the plugin to use it
 gsap.registerPlugin(ScrollTrigger);
 
-// --- The Animated Horizontal Scroll Component ---
-export default function EventSection() {
-  const mainRef = useRef(null);
-  const trackRef = useRef(null);
+const Events = () => {
+  const component = useRef(null);
+  const slider = useRef(null);
 
-  useGSAP(() => {
-    const track = trackRef.current;
-    const cards = gsap.utils.toArray(".card-item");
-
-    // Calculate the total width of the track that needs to be scrolled.
-    // This is the full scrollable width minus the width of the viewport.
-    const scrollWidth = track.scrollWidth - window.innerWidth;
-
-    // Create the main horizontal scroll animation.
-    // This tween moves the track to the left based on the user's vertical scroll.
-    const horizontalScroll = gsap.to(track, {
-      x: -scrollWidth,
-      ease: "none",
-      scrollTrigger: {
-        trigger: mainRef.current,
-        pin: true,
-        scrub: 1,
-        // The animation ends when the track has scrolled its full width.
-        end: () => `+=${scrollWidth}`,
-        invalidateOnRefresh: true // Recalculate on window resize
-      }
-    });
-
-    // Add individual animations to each card to make them pop.
-    cards.forEach((card) => {
-      // Animate cards to fade and scale down as they move away from the center.
-      gsap.to(card, {
-        scale: 0.9,
-        opacity: 0.7,
+  useLayoutEffect(() => {
+    const comp = component.current;
+    let ctx = gsap.context(() => {
+      let panels = gsap.utils.toArray(".panel");
+      gsap.to(panels, {
+        xPercent: -100 * (panels.length - 1),
+        ease: "none",
         scrollTrigger: {
-          trigger: card,
-          containerAnimation: horizontalScroll,
-          start: "center right",
-          end: "center left",
-          scrub: true,
-        }
+          trigger: comp,
+          pin: true,
+          scrub: 1,
+          start: "top top",
+          snap: 1 / (panels.length - 1),
+          end: () => "+=" + slider.current.offsetWidth * (panels.length - 1),
+          markers: true,
+        },
       });
-
-      // Animate cards to full size and opacity when they are in the center.
-      gsap.to(card, {
-        scale: 1,
-        opacity: 1,
-        scrollTrigger: {
-          trigger: card,
-          containerAnimation: horizontalScroll,
-          start: "center center+=200",
-          end: "center center-=100",
-          scrub: true,
-        }
-      });
-    });
-
-  }, { scope: mainRef });
+    }, component);
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <>
-      <div className="">
-      </div>
-
-      <section ref={mainRef} className="h-screen w-full overflow-hidden bg-gray-900">
-        <div ref={trackRef} className="h-full flex items-center gap-8 px-8">
-          {/* Add a starting title card */}
-          <div className="flex-shrink-0 w-[50vw] text-white pr-12">
-            <h2 className="text-6xl font-bold">Our Events</h2>
-          </div>
-          {events.map((event, idx) => (
-            <div key={idx} className="card-item flex-shrink-0 w-[300px] h-[400px] md:w-[400px] md:h-[550px]">
-              <img
-                src={event.src}
-                className="w-full h-full object-cover rounded-2xl"
-                alt={event.title}
-              />
-            </div>
-          ))}
-          {/* Add a blank spacer at the end for better visual completion */}
-          <div className="flex-shrink-0 w-[50vw]"></div>
+    <div className={styles.Events} ref={component}>
+      <h1 className={styles.sectionHeader}>Our Events</h1>
+      <div className={styles.container} ref={slider}>
+        <div className={`${styles.panel} ${styles.descriptionPanel} panel`}>
+          <h2>Scroll to explore our recent events</h2>
+          <p>We host a variety of workshops, competitions, and talks throughout the year. Get a glimpse of what we do.</p>
         </div>
-      </section>
-
-      <div className="">
+        {events.map((event, index) => {
+          return (
+            <div className={`${styles.panel} panel`} key={index}>
+              <div className={styles.panelContainer}>
+                <div className={styles.left}>
+                  <Image
+                    src={event.src}
+                    alt={event.title}
+                    fill
+                    style={{ objectFit: "cover", borderRadius: '12px' }}
+                  />
+                </div>
+                <div className={styles.right}>
+                  <h1>{event.title}</h1>
+                  <p>{event.description}</p>
+                </div>
+              </div>
+            </div>
+          );
+        })}
       </div>
-    </>
+    </div>
   );
-}
+};
+
+export default Events;

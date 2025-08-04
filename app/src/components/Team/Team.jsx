@@ -3,7 +3,7 @@ import { motion, useInView } from 'framer-motion';
 import teamMembers from '../../data/Team.js';
 
 // TeamSection component for displaying club members with a pop-in animation
-const App = () => {
+const Teams = () => {
   const titleRef = useRef(null);
   // useInView hook to detect if the element is in the viewport
   const isInView = useInView(titleRef, { once: false, amount: 0.5 });
@@ -220,4 +220,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Teams;

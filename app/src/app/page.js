@@ -6,6 +6,7 @@ import ScrollBlurBackground from "../components/ScrollBlurBackground";
 import About from "../components/About/About"; // Ensure this component uses forwardRef
 import BlogSection from "../components/BlogClient";
 import EventsSection from "../components/Events/Events";
+import Marquee from "../components/Events/MarqueeUpdates";
 import TeamSection from "../components/TeamClient"; // Ensure this component uses forwardRef if needed for future logic
 import ContactSection from "../components/ContactClient";
 
@@ -27,10 +28,11 @@ export default function Home() {
         <div className="mx-auto">
           <About ref={aboutSectionRef} />
         </div>
-        <div className="">
+        <section className="">
           <BlogSection />
-        </div>
-        <section>
+        </section>
+        <section className="bg-gray-900 text-white font-sans">
+          <Marquee />
           <EventsSection />
         </section>
         <section>

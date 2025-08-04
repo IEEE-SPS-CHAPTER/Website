@@ -1,3 +1,117 @@
-.cards {
 
+/* Main container for the entire Events section */
+.Events {
+    overflow: hidden; /* Prevents any accidental overflow before JS kicks in */
+    background-color: #0a0a0a; /* Dark background for the section */
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+}
+
+/* Header style for "Our Events" */
+.sectionHeader {
+    text-align: center;
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 4rem;
+    color: #f5f5f5;
+}
+
+/* This is the main horizontal scrolling container (the "slider") */
+.container {
+    /* It's a flex container that will hold all the panels in a row */
+    display: flex;
+    /* We set a specific width that is a multiple of the number of panels */
+    width: 600%; /* 100% for each of the 6 events */
+    height: 100vh; /* Make the container take up the full viewport height */
+}
+
+/* Styling for each individual panel inside the container */
+.panel {
+    /* Each panel takes up the full width of the viewport */
+    width: 100vw;
+    height: 100vh;
+    /* Center the content within the panel */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    color: white;
+}
+
+/* Specific styling for the first introductory panel */
+.descriptionPanel {
+    flex-direction: column;
+    text-align: center;
+    background-color: #1a1a1a;
+}
+
+.descriptionPanel h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.descriptionPanel p {
+    font-size: 1.2rem;
+    max-width: 600px;
+    color: #a0a0a0;
+}
+
+
+/* Container for the content within each event panel (image + text) */
+.panelContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 1200px; /* Max width for content on larger screens */
+    gap: 2rem;
+}
+
+/* Left side of the panel (the image) */
+.left {
+    position: relative; /* Needed for Next.js Image with fill */
+    width: 50%;
+    height: 60vh;
+    border-radius: 12px;
+    overflow: hidden; /* Ensures image corners are rounded */
+}
+
+/* Right side of the panel (the text content) */
+.right {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.right h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.right p {
+    font-size: 1.1rem;
+    color: #cccccc;
+    line-height: 1.6;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+    .panelContainer {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .left, .right {
+        width: 100%;
+    }
+
+    .left {
+        height: 40vh; /* Adjust image height on mobile */
+    }
+
+    .right h1 {
+        font-size: 2rem;
+    }
 }

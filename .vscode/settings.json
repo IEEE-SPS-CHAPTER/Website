@@ -26,5 +26,6 @@
     "wdth",
     "wght",
     "Yash"
-  ]
+  ],
+  "git.ignoreLimitWarning": true
 }

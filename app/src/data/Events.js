@@ -20,7 +20,7 @@ const events = [
     title: "Current Test",
   },
   {
-    src: "/events/hardwarehustle.avif",
+    src: "/events/hardware-hustle.jpeg",
     color: "55, 224, 39",
     title: "Hardware Hustle",
   },

@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useCallback } from 'react'; // Import useCallback
-import dynamic from 'next/dynamic'; // Import dynamic
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import dynamic from 'next/dynamic';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
@@ -15,13 +15,13 @@ const Marquee = dynamic(() => import("../components/Events/MarqueeUpdates"));
 const TeamSection = dynamic(() => import("../components/TeamClient"));
 const ContactSection = dynamic(() => import("../components/ContactClient"));
 
+// CORRECT: Register the GSAP plugin right after imports in the main page component
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Home() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const blogPosts = [
-    // ... (Your blogPosts array remains the same)
     { id: 1, title: "DIGITAL SIGNAL PROCESSING IN OCEAN AND SPACE TECHNOLOGY", readTime: "3 min read", author: "Sneha Prasad", date: "Mar 23, 2025", content: "Digital Signal Processing (DSP) uses digital systems to analyze and manipulate signals for communication, radar, and data analysis. It filters, modulates, and compresses signals with high accuracy. From aircraft noise reduction to ocean tracking via radar altimeters, DSP plays a key role in modern electronic and satellite systems.", category: "Technology", link: "https://medium.com/@vitieeesps/digital-signal-processing-in-ocean-and-space-technology-987b08ad1b7c" },
     { id: 2, title: "Electric Propulsion", readTime: "5 min read", author: "Sanskar Arora", date: "Jan 23, 2022", content: "Electric propulsion uses electricity to accelerate propellants at high speeds, reducing fuel needs and launch costs for space missions. With types like ion and Hall thrusters, it offers high efficiency and specific impulse, making it ideal for deep space travel. This article explores its principles, types, and applications.", category: "Mechanics", link: "https://medium.com/ieee-signal-processing-society-vit/electric-propulsion-ae0e02080591" },
     { id: 3, title: "CHIP MANUFACTURING : A DIVE INTO ONE OF HUMANITY'S GREATEST SCIENTIFIC FEATS", readTime: "3 min read", author: "Anusha Ghose", date: "April 1, 2025", content: "Modern chips, smaller than a red blood cell, power today's devices by packing billions of transistors into tiny spaces. With innovations like 3D structures and chiplet architecture, manufacturers overcome physical limits to boost performance. This article explores chip miniaturization, challenges, and future advancements in semiconductor technology.", category: "Electronics", link: "https://medium.com/@vitieeesps/chip-manufacturing-a-dive-into-one-of-humanitys-greatest-scientific-feats-c617b872600d" },
@@ -29,7 +29,6 @@ export default function Home() {
     { id: 5, title: "Future & Scope of IoT", readTime: "11 min read", author: "Ananya Ghosh", date: "Jun 21, 2022", content: "The Internet of Things (IoT) connects everyday devices to the internet, enabling smart automation and remote control. From managing home appliances to improving healthcare and agriculture, IoT simplifies life. This article explores IoT’s architecture, applications, challenges, security concerns, and future scope, highlighting its growing impact across various industries.", category: "IoT", link: "https://medium.com/ieee-signal-processing-society-vit/future-scope-of-iot-61981da29a91" }
   ];
 
-  // FIX 1: Wrap nextCard in useCallback to prevent re-creation on every render
   const nextCard = useCallback(() => {
     setCurrentIndex((prev) => (prev + 1) % blogPosts.length);
   }, [blogPosts.length]);
@@ -44,13 +43,11 @@ export default function Home() {
     return 'prev';
   };
 
-  // Auto-advance cards - no changes needed here
   useEffect(() => {
     const interval = setInterval(nextCard, 10000);
     return () => clearInterval(interval);
-  }, [nextCard]); // Use the memoized nextCard function
+  }, [nextCard]);
 
-  // FIX 2: Keyboard navigation now correctly checks if it's on the client
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'ArrowRight' || e.key === ' ') {
@@ -62,10 +59,9 @@ export default function Home() {
       }
     };
 
-    // Add event listener only on the client
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [nextCard, blogPosts.length]); // Add blogPosts.length to dependency array
+  }, [nextCard, blogPosts.length]);
 
   const ArrowIcon = () => (
     <svg width="91" height="79" viewBox="0 0 91 79" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -81,7 +77,6 @@ export default function Home() {
   const mainContainerRef = useRef(null);
   const horizontalTrackRef = useRef(null);
 
-  // FIX 3: useGSAP now correctly runs only on the client
   useGSAP(() => {
     const track = horizontalTrackRef.current;
     const container = mainContainerRef.current;
@@ -90,7 +85,7 @@ export default function Home() {
     const cards = gsap.utils.toArray(".card-item");
 
     const mainScrollTween = gsap.to(track, {
-      x: () => -(track.scrollWidth - window.innerWidth) + "px", // This now runs safely
+      x: () => -(track.scrollWidth - window.innerWidth) + "px",
       ease: "none",
       scrollTrigger: {
         trigger: container,

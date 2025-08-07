@@ -1,30 +1,37 @@
 {
-  "name": "website",
-  "version": "1.0.0",
-  "description": "",
+  "name": "app",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "dev": "cd app && npm run dev",
-    "build": "cd app && npm run build",
-    "start": "cd app && npm run start",
-    "lint": "cd app && npm run lint"
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/IEEE-SPS-CHAPTER/Website.git"
+  "dependencies": {
+    "@gsap/react": "^2.1.2",
+    "@react-three/drei": "^10.3.0",
+    "@react-three/fiber": "^9.1.2",
+    "autoprefixer": "^10.4.21",
+    "framer-motion": "^12.23.12",
+    "gasp": "^0.0.2",
+    "keen-slider": "^6.8.6",
+    "lucide-react": "^0.511.0",
+    "next": "^15.3.3",
+    "postcss": "^8.5.6",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-icons": "^5.5.0",
+    "rss-parser": "^3.13.0",
+    "styled-components": "^6.1.18",
+    "three": "^0.177.0"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/IEEE-SPS-CHAPTER/Website/issues"
-  },
-  "homepage": "https://github.com/IEEE-SPS-CHAPTER/Website#readme",
-   "dependencies": {
-   "next": "^15.3.4",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "@react-three/fiber": "^8.15.11",
-    "@react-three/drei": "^9.88.6"
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "24.0.7",
+    "eslint": "^9",
+    "eslint-config-next": "15.3.3",
+    "tailwindcss": "^4.1.11"
   }
 }

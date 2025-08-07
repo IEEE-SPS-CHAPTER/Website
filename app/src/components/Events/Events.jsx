@@ -1,6 +1,14 @@
 "use client";
-import React from 'react';
+import React, { useRef } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
+
 import events from '../../data/Events';
+
+
+// --- Register GSAP Plugin ---
+gsap.registerPlugin(ScrollTrigger);
 
 // --- The Main App Component ---
 export default function EventsSection() {
